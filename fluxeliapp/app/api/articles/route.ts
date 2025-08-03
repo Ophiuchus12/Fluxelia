@@ -1,16 +1,37 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+import { NextResponse } from 'next/server'
+import sqlite3 from 'sqlite3'
+import { open } from 'sqlite'
+import path from 'path'  // oublie pas d'importer path
 
-export async function GET() {
-    const dbPath = path.resolve(process.cwd(), '../rss_feed.db');
-    const db = new Database(dbPath);
+// 📦 connexion à SQLite
+async function openDb() {
+    const dbPath = path.resolve(process.cwd(), '../rss_feed.db')  // chemin correct
+    return open({
+        filename: dbPath,
+        driver: sqlite3.Database,
+    })
+}
 
-    const articles = db.prepare(`
-    SELECT title, url, short_description, published_at, category
-    FROM articles
-    ORDER BY published_at DESC
-    LIMIT 20
-  `).all();
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url)
+    const categorie = searchParams.get('categorie') || null
+    const nbShownParam = searchParams.get('nbShown')
+    const nbShown = nbShownParam ? parseInt(nbShownParam) : 20
 
-    return Response.json(articles);
+    const db = await openDb()
+
+    let articles
+    if (categorie) {
+        articles = await db.all(
+            `SELECT * FROM articles WHERE category = ? ORDER BY published_at DESC LIMIT ?`,
+            [categorie, nbShown]
+        )
+    } else {
+        articles = await db.all(
+            `SELECT * FROM articles ORDER BY published_at DESC LIMIT ?`,
+            [nbShown]
+        )
+    }
+
+    return NextResponse.json(articles)
 }
