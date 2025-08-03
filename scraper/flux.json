@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "category": "technologie",
+        "category": "Technologie",
         "feeds": [
             "https://korben.info/feed"
         ]
     },
     {
         "id": 2,
-        "category": "économie",
+        "category": "Economie",
         "feeds": [
             "https://www.lemonde.fr/economie/rss_full.xml"
         ]
