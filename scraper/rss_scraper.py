@@ -2,8 +2,12 @@ import sqlite3
 import feedparser
 import json
 from bs4 import BeautifulSoup
+import os
 
-conn = sqlite3.connect('../rss_feeds.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # dossier du script actuel
+DB_PATH = os.path.join(BASE_DIR, '..', 'rss_feed.db')
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 def create_table():
@@ -53,7 +57,7 @@ def json_to_sqlite(feed_data, category):
 
 
 def read_articles_from_db(limit=10):
-    conn = sqlite3.connect('../rss_feeds.db')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
