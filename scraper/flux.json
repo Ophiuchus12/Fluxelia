@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "category": "technologie",
+        "feeds": [
+            "https://korben.info/feed"
+        ]
+    },
+    {
+        "id": 2,
+        "category": "économie",
+        "feeds": [
+            "https://www.lemonde.fr/economie/rss_full.xml"
+        ]
+    }
+]
