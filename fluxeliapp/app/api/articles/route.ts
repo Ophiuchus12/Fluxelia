@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const categorie = searchParams.get('categorie') || null
     const nbShownParam = searchParams.get('nbShown')
-    const nbShown = nbShownParam ? parseInt(nbShownParam) : 20
+    const nbShown = nbShownParam ? parseInt(nbShownParam) : 1000
 
     const db = await openDb()
 

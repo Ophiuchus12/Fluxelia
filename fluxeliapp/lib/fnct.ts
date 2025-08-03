@@ -1,4 +1,4 @@
-export async function fetchArticle(categorie = '', nbShown = 20) {
+export async function fetchArticle(categorie = '', nbShown = 1000) {
     const params = new URLSearchParams()
     if (categorie) params.append('categorie', categorie)
     if (nbShown) params.append('nbShown', nbShown.toString())
