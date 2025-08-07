@@ -1,11 +1,12 @@
 'use client'
-import { Search, Filter, Globe, Clock, ExternalLink, Menu, X, Grid, List } from 'lucide-react';
+import { Search, Filter, Globe, Clock, ExternalLink, Menu, X, Grid, List, TrendingUp, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react'
 import { fetchArticle } from '@/lib/fnct'
 import { ArticleCard } from './components/ArticleCard'
 import { Article } from '@/types/article'
 import { Header } from './components/Header';
 import { SearchAndFilter } from './components/SearchAndFilter';
+import { ArticlePage } from '@/types/articlePage';
 
 export default function FluxeliaApp() {
   const [articles, setArticles] = useState<Article[]>([])
@@ -15,19 +16,29 @@ export default function FluxeliaApp() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const limit = 20 // ou 12, 30 selon ton UI
+
   // Fonction pour charger les catégories disponibles
   async function loadCategories() {
     try {
       setLoading(true)
       setError(null)
 
-      // Récupérer tous les articles pour extraire les catégories uniques
-      const allArticles: Article[] = await fetchArticle('', 1000);
-      const uniqueCats: string[] = Array.from(new Set(allArticles.map((a) => a.category))).sort();
-      setCategories(['Toutes', ...uniqueCats]);
+      // Appel API avec fetchArticle pour récupérer les articles paginés
+      const res: ArticlePage = await fetchArticle('', limit, 1)
 
-      // Charger les articles de la première catégorie (tous)
-      setArticles(allArticles)
+      // Extraction des catégories uniques
+      const uniqueCats: string[] = Array.from(
+        new Set(res.articles.map((a) => a.category))
+      ).sort()
+
+      // Mise à jour des catégories avec "Toutes" en premier
+      setCategories(['Toutes', ...uniqueCats])
+
+      // Stockage des articles récupérés
+      setArticles(res.articles)
     } catch (err) {
       setError('Erreur lors du chargement des catégories')
       console.error('Erreur:', err)
@@ -36,16 +47,19 @@ export default function FluxeliaApp() {
     }
   }
 
+
   // Fonction pour charger les articles d'une catégorie spécifique
-  async function loadArticlesByCategory(category: string) {
+  async function loadArticlesByCategory(category: string, pageToLoad: number = 1) {
     try {
       setLoading(true)
       setError(null)
 
-      // Si "Toutes" est sélectionné, on passe une chaîne vide ou undefined
-      const categoryParam = category === 'Toutes' ? '' : category;
-      const res: Article[] = await fetchArticle(categoryParam, 50);
-      setArticles(res);
+      const categoryParam = category === 'Toutes' ? '' : category
+      const res = await fetchArticle(categoryParam, limit, pageToLoad)
+
+      setArticles(res.articles)
+      setPage(pageToLoad)
+      setTotalPages(res.pagination.totalPages)
     } catch (err) {
       setError('Erreur lors du chargement des articles')
       console.error('Erreur:', err)
@@ -54,11 +68,13 @@ export default function FluxeliaApp() {
     }
   }
 
+
   // Gestionnaire de changement de catégorie
   const handleCategoryChange = async (newCategory: string) => {
     setSelectedCategory(newCategory)
-    await loadArticlesByCategory(newCategory)
+    await loadArticlesByCategory(newCategory, 1) // reset à page 1
   }
+
 
   // Chargement initial
   useEffect(() => {
@@ -66,21 +82,50 @@ export default function FluxeliaApp() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+      {/* Effet de particules d'arrière-plan */}
+      <div className="fixed inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      </div>
       <Header />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Section hero */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Votre veille d'actualités
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              personnalisée
-            </span>
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        {/* Section hero futuriste */}
+        <div className="text-center mb-16 relative">
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full border border-cyan-500/30 mb-6">
+            <Zap className="w-4 h-4 text-cyan-400 mr-2" />
+            <span className="text-cyan-400 text-sm font-bold">L'INFORMATION AUGMENTÉE</span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="text-white">Flux</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">elia</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Découvrez les dernières actualités de vos sources préférées, organisées et filtrées selon vos centres d'intérêt.
+
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Transcendez l'information. Explorez
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-bold"> Fluxelia</span>
+            {" "}qui révolutionne votre veille technologique.
           </p>
+
+          {/* Stats en temps réel */}
+          <div className="flex flex-wrap justify-center gap-8 mt-12">
+            {[
+              { label: "Sources Active", value: "2", icon: <Globe className="w-5 h-5" /> },
+              { label: "Thèmes", value: "2", icon: <Zap className="w-5 h-5" /> },
+              { label: "Tendances", value: "Live", icon: <TrendingUp className="w-5 h-5" /> }
+            ].map((stat, index) => (
+              <div key={index} className="flex items-center space-x-3 px-4 py-2 bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50">
+                <div className="text-cyan-400">{stat.icon}</div>
+                <div>
+                  <div className="text-white font-bold">{stat.value}</div>
+                  <div className="text-gray-400 text-xs">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Recherche et filtres */}
@@ -113,24 +158,23 @@ export default function FluxeliaApp() {
         )}
 
         {/* Compteur d'articles avec état de chargement */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="text-gray-600">
-            {loading ? (
-              <span className="flex items-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                Chargement...
+        {/* Compteur d'articles */}
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            {/* <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse"></div>
+              <span className="text-gray-300">
+                <span className="font-bold text-white text-xl">{articles.length}</span> signaux détectés
               </span>
-            ) : (
-              <>
-                <span className="font-semibold text-gray-900">{articles.length}</span> articles
-                {selectedCategory && selectedCategory !== 'Toutes' && (
-                  <span>
-                    dans la catégorie <span className="font-semibold text-blue-600">{selectedCategory}</span>
-                  </span>
-                )}
-              </>
+            </div> */}
+            {selectedCategory && (
+              <div className="flex items-center space-x-2">
+                <span className="text-gray-500">•</span>
+                <span className="text-cyan-400 font-medium">#{selectedCategory}</span>
+              </div>
             )}
           </div>
+
 
 
           {/* Indicateur de catégorie active */}
@@ -151,70 +195,188 @@ export default function FluxeliaApp() {
         </div>
 
         {/* Grille d'articles avec état de chargement */}
-        {loading ? (
-          <div className={`grid gap-6 ${viewMode === 'grid'
-            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-            : 'grid-cols-1 max-w-4xl mx-auto'
-            }`}>
-            {/* Skeleton loaders */}
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-200 p-6">
-                <div className="animate-pulse">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="h-4 bg-gray-300 rounded w-20"></div>
-                    <div className="h-4 bg-gray-300 rounded w-16"></div>
+        {
+          loading ? (
+            <div className={`grid gap-6 ${viewMode === 'grid'
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+              : 'grid-cols-1 max-w-4xl mx-auto'
+              }`}>
+              {/* Skeleton loaders */}
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl border border-gray-200 p-6">
+                  <div className="animate-pulse">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="h-4 bg-gray-300 rounded w-20"></div>
+                      <div className="h-4 bg-gray-300 rounded w-16"></div>
+                    </div>
+                    <div className="h-6 bg-gray-300 rounded mb-3"></div>
+                    <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
                   </div>
-                  <div className="h-6 bg-gray-300 rounded mb-3"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={`grid gap-6 ${viewMode === 'grid'
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+              : 'grid-cols-1 max-w-4xl mx-auto'
+              }`}>
+              {articles.map((article, index) => (
+                <ArticleCard
+                  key={`${article.url}-${index}`}
+                  article={article}
+                  viewMode={viewMode}
+                />
+              ))}
+            </div>
+          )
+        }
+
+
+        {/* Pagination futuriste */}
+        {!loading && totalPages > 1 && (
+          <div className="mt-16 flex justify-center">
+            <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-2">
+              <div className="flex items-center space-x-1">
+                {/* Bouton Précédent */}
+                <button
+                  onClick={() => loadArticlesByCategory(selectedCategory, page - 1)}
+                  disabled={page === 1}
+                  className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${page === 1
+                    ? 'text-gray-600 cursor-not-allowed opacity-50'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50 hover:shadow-lg hover:shadow-cyan-500/10'
+                    }`}
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Précédent
+                </button>
+
+                {/* Numéros de pages avec logique d'ellipses */}
+                <div className="flex items-center space-x-1 px-2">
+                  {(() => {
+                    const getVisiblePages = () => {
+                      if (totalPages <= 6) {
+                        // Si 7 pages ou moins, afficher toutes les pages
+                        return Array.from({ length: totalPages }, (_, i) => i + 1);
+                      }
+
+                      const pages = [];
+
+                      // Toujours afficher la première page
+                      pages.push(1);
+
+                      if (page <= 4) {
+                        // Si on est au début, afficher 1,2,3,4,5...dernière
+                        pages.push(2, 3, 4, 5);
+                        if (totalPages > 6) pages.push('ellipsis1');
+                        pages.push(totalPages);
+                      } else if (page >= totalPages - 3) {
+                        // Si on est à la fin, afficher 1...avant-dernière-3,avant-dernière-2,avant-dernière-1,dernière
+                        if (totalPages > 6) pages.push('ellipsis1');
+                        pages.push(totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+                      } else {
+                        // Au milieu, afficher 1...page-1,page,page+1...dernière
+                        pages.push('ellipsis1');
+                        pages.push(page - 1, page, page + 1);
+                        pages.push('ellipsis2');
+                        pages.push(totalPages);
+                      }
+
+                      return pages;
+                    };
+
+                    return getVisiblePages().map((p, index) => {
+                      if (typeof p === 'string') {
+                        // Ellipses
+                        return (
+                          <span key={p} className="px-2 py-2 text-gray-500 text-sm">
+                            ...
+                          </span>
+                        );
+                      }
+
+                      return (
+                        <button
+                          key={p}
+                          onClick={() => loadArticlesByCategory(selectedCategory, p)}
+                          className={`w-10 h-10 rounded-xl font-bold text-sm transition-all duration-300 ${p === page
+                            ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 scale-110'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-700/50 hover:shadow-md hover:shadow-cyan-500/10 hover:scale-105'
+                            }`}
+                        >
+                          {p}
+                        </button>
+                      );
+                    });
+                  })()}
+                </div>
+
+                {/* Bouton Suivant */}
+                <button
+                  onClick={() => loadArticlesByCategory(selectedCategory, page + 1)}
+                  disabled={page === totalPages}
+                  className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${page === totalPages
+                    ? 'text-gray-600 cursor-not-allowed opacity-50'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50 hover:shadow-lg hover:shadow-cyan-500/10'
+                    }`}
+                >
+                  Suivant
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Indicateur de page actuelle */}
+            <div className="ml-6 flex items-center">
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-xl border border-gray-700/30 px-4 py-3">
+                <div className="flex items-center space-x-2 text-sm">
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                  <span className="text-gray-400">Page</span>
+                  <span className="text-white font-bold">{page}</span>
+                  <span className="text-gray-500">sur</span>
+                  <span className="text-cyan-400 font-bold">{totalPages}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className={`grid gap-6 ${viewMode === 'grid'
-            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-            : 'grid-cols-1 max-w-4xl mx-auto'
-            }`}>
-            {articles.map((article, index) => (
-              <ArticleCard
-                key={`${article.url}-${index}`}
-                article={article}
-                viewMode={viewMode}
-              />
-            ))}
+            </div>
           </div>
         )}
+
 
         {/* Message si aucun article */}
-        {!loading && articles.length === 0 && !error && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <Search className="w-16 h-16 mx-auto" />
+        {
+          !loading && articles.length === 0 && !error && (
+            <div className="text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <Search className="w-16 h-16 mx-auto" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Aucun article trouvé
+              </h3>
+              <p className="text-gray-600 mb-4">
+                {selectedCategory && selectedCategory !== 'Toutes'
+                  ? `Aucun article disponible dans la catégorie "${selectedCategory}".`
+                  : 'Aucun article disponible pour le moment.'
+                }
+              </p>
+              {selectedCategory && selectedCategory !== 'Toutes' && (
+                <button
+                  onClick={() => handleCategoryChange('Toutes')}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Voir tous les articles
+                </button>
+              )}
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Aucun article trouvé
-            </h3>
-            <p className="text-gray-600 mb-4">
-              {selectedCategory && selectedCategory !== 'Toutes'
-                ? `Aucun article disponible dans la catégorie "${selectedCategory}".`
-                : 'Aucun article disponible pour le moment.'
-              }
-            </p>
-            {selectedCategory && selectedCategory !== 'Toutes' && (
-              <button
-                onClick={() => handleCategoryChange('Toutes')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Voir tous les articles
-              </button>
-            )}
-          </div>
-        )}
-      </main>
+          )
+        }
+      </main >
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-16">
+      < footer className="bg-white border-t border-gray-200 mt-16" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
@@ -230,7 +392,7 @@ export default function FluxeliaApp() {
             </p>
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 }

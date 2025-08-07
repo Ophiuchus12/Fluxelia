@@ -5,19 +5,29 @@ import { Globe, Menu, X } from 'lucide-react';
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     return (
-        <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+        <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
+            ? 'bg-gray-900/95 backdrop-blur-xl border-b border-cyan-500/20 shadow-lg shadow-cyan-500/10'
+            : 'bg-gray-900/80 backdrop-blur-md'
+            }`}>
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    {/* Logo */}
-                    <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                            <Globe className="w-5 h-5 text-white" />
+                    {/* Logo avec effet néon */}
+                    <div className="flex items-center space-x-3 group">
+                        <div className="relative">
+                            <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                                <Globe className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
                         </div>
-                        <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                            Fluxelia
-                        </h1>
+                        <div className="relative">
+                            <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                                Fluxelia
+                            </h1>
+                            <div className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></div>
+                        </div>
                     </div>
 
                     {/* Navigation desktop */}

@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server'
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
-import path from 'path'  // oublie pas d'importer path
+import path from 'path'
 
-// 📦 connexion à SQLite
 async function openDb() {
-    const dbPath = path.resolve(process.cwd(), '../rss_feed.db')  // chemin correct
+    const dbPath = path.resolve(process.cwd(), '../rss_feed.db') // adapté pour Next.js
     return open({
         filename: dbPath,
         driver: sqlite3.Database,
@@ -14,24 +13,48 @@ async function openDb() {
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
+
     const categorie = searchParams.get('categorie') || null
-    const nbShownParam = searchParams.get('nbShown')
-    const nbShown = nbShownParam ? parseInt(nbShownParam) : 1000
+    const pageParam = searchParams.get('page')
+    const limitParam = searchParams.get('limit')
+
+    const page = pageParam ? parseInt(pageParam, 10) : 1
+    const limit = limitParam ? parseInt(limitParam, 10) : 20
+    const offset = (page - 1) * limit
 
     const db = await openDb()
 
     let articles
-    if (categorie) {
+    let totalCount
+
+    if (categorie && categorie !== 'Toutes') {
         articles = await db.all(
-            `SELECT * FROM articles WHERE category = ? ORDER BY published_at DESC LIMIT ?`,
-            [categorie, nbShown]
+            `SELECT * FROM articles WHERE category = ? ORDER BY published_at DESC LIMIT ? OFFSET ?`,
+            [categorie, limit, offset]
         )
+
+        const count = await db.get(
+            `SELECT COUNT(*) as count FROM articles WHERE category = ?`,
+            [categorie]
+        )
+        totalCount = count.count
     } else {
         articles = await db.all(
-            `SELECT * FROM articles ORDER BY published_at DESC LIMIT ?`,
-            [nbShown]
+            `SELECT * FROM articles ORDER BY published_at DESC LIMIT ? OFFSET ?`,
+            [limit, offset]
         )
+
+        const count = await db.get(`SELECT COUNT(*) as count FROM articles`)
+        totalCount = count.count
     }
 
-    return NextResponse.json(articles)
+    return NextResponse.json({
+        articles,
+        pagination: {
+            page,
+            limit,
+            total: totalCount,
+            totalPages: Math.ceil(totalCount / limit),
+        },
+    })
 }

@@ -1,18 +1,27 @@
-export async function fetchArticle(categorie = '', nbShown = 1000) {
+import { Article } from "@/types/article"
+import { ArticlePage } from "@/types/articlePage"
+
+// /lib/fnct.ts
+export async function fetchArticle(
+    category: string = '',
+    limit: number = 20,
+    page: number = 1
+): Promise<ArticlePage> {
     const params = new URLSearchParams()
-    if (categorie) params.append('categorie', categorie)
-    if (nbShown) params.append('nbShown', nbShown.toString())
+    if (category) params.set('categorie', category)
+    if (limit) params.set('limit', limit.toString())
+    if (page) params.set('page', page.toString())
 
-    const response = await fetch(`/api/articles?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
+    const res = await fetch(`/api/articles?${params.toString()}`)
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    return response.json()
+    if (!res.ok) throw new Error('Erreur de chargement des articles')
+    return await res.json()
 }
+
+export async function fetchTendances(): Promise<Article[]> {
+    const res = await fetch('/api/articles/tendances')
+
+    if (!res.ok) throw new Error('Erreur de chargement des tendances')
+    return await res.json()
+}
+
