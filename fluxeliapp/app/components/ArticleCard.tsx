@@ -25,7 +25,7 @@ export function ArticleCard({ article, viewMode }: ArticleCardProps) {
             'Technologie': 'bg-blue-500',
             'Economie': 'bg-orange-500',
             'Environnement': 'bg-green-500',
-            'Finance': 'bg-yellow-500',
+            'Actualités': 'bg-yellow-500',
             'Sport': 'bg-red-500',
             'Santé': 'bg-purple-500',
         };
