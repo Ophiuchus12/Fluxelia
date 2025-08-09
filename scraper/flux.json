@@ -3,7 +3,8 @@
         "id": 1,
         "category": "Technologie",
         "feeds": [
-            "https://korben.info/feed"
+            "https://korben.info/feed",
+            "https://www.techniques-ingenieur.fr/actualite/thematique/informatique-et-numerique/feed/"
         ]
     },
     {
@@ -18,6 +19,27 @@
         "category": "Environnement",
         "feeds": [
             "https://www.actu-environnement.com/flux/rss/environnement/"
+        ]
+    },
+    {
+        "id": 4,
+        "category": "Sport",
+        "feeds": [
+            "https://partner-feeds.20min.ch/rss/20minutes/sports/"
+        ]
+    },
+    {
+        "id": 5,
+        "category": "Santé",
+        "feeds": [
+            "https://www.santemagazine.fr/feeds/rss/actualites"
+        ]
+    },
+    {
+        "id": 6,
+        "category": "Actualités",
+        "feeds": [
+            "https://www.lefigaro.fr/rss/figaro_actualites.xml"
         ]
     }
 ]

@@ -110,16 +110,16 @@ export default function FluxeliaApp() {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Transcendez l'information. Explorez
+            Transcendez l'actualité. Explorez
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-bold"> Fluxelia</span>
-            {" "}qui révolutionne votre veille technologique.
+            {" "}qui révolutionne votre façon de consommer l'information.
           </p>
 
           {/* Stats en temps réel */}
           <div className="flex flex-wrap justify-center gap-8 mt-12">
             {[
-              { label: "Sources Active", value: "2", icon: <Globe className="w-5 h-5" /> },
-              { label: "Catégories", value: stats?.countCategories || 0, icon: <Zap className="w-5 h-5" /> },
+              { label: "Sources actives", value: "7", icon: <Globe className="w-5 h-5" /> },
+              { label: "Informations", value: "Live", icon: <Zap className="w-5 h-5" /> },
               { label: "Nombres d'articles", value: stats?.countArticles || 0, icon: <TrendingUp className="w-5 h-5" /> }
             ].map((stat, index) => (
               <div key={index} className="flex items-center space-x-3 px-4 py-2 bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50">
