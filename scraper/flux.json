@@ -12,5 +12,12 @@
         "feeds": [
             "https://www.lemonde.fr/economie/rss_full.xml"
         ]
+    },
+    {
+        "id": 3,
+        "category": "Environnement",
+        "feeds": [
+            "https://www.actu-environnement.com/flux/rss/environnement/"
+        ]
     }
 ]

@@ -3,6 +3,23 @@ import feedparser
 import json
 from bs4 import BeautifulSoup
 import os
+import email.utils
+from datetime import datetime, timezone
+
+def rfc2822_to_iso8601(rfc2822_date):
+    parsed_time = email.utils.parsedate_tz(rfc2822_date)
+    if parsed_time is None:
+        return None
+
+    timestamp = email.utils.mktime_tz(parsed_time)
+
+    # datetime aware avec timezone UTC
+    dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+
+    # isoformat garde le suffixe +00:00, tu peux remplacer par Z si tu veux
+    return dt.isoformat().replace('+00:00', 'Z')
+
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # dossier du script actuel
 DB_PATH = os.path.join(BASE_DIR, '..', 'rss_feed.db')
@@ -48,11 +65,13 @@ def json_to_sqlite(feed_data, category):
             img.decompose()
         short_description = str(soup)
 
-        published_at = entry.published 
+        published_at = entry.published
+        published_at_iso = rfc2822_to_iso8601(published_at)
         cursor.execute("""
-        INSERT OR IGNORE INTO articles (title, url, short_description, published_at, category)
-        VALUES (?, ?, ?, ?, ?)
-        """, (title, url, short_description, published_at, category))
+            INSERT OR IGNORE INTO articles (title, url, short_description, published_at, category)
+            VALUES (?, ?, ?, ?, ?)
+        """, (title, url, short_description, published_at_iso, category))
+
     conn.commit()
 
 
@@ -67,16 +86,16 @@ def read_articles_from_db(limit=10):
         LIMIT ?
     """, (limit,))
 
-    rows = cursor.fetchall()
+    # rows = cursor.fetchall()
 
-    for row in rows:
-        title, url, published_at, category, short_description = row
-        print(f"📰 {title}")
-        print(f"🔗 {url}")
-        print(f"📅 {published_at}")
-        print(f"🏷️ Catégorie: {category}")
-        print(f"description: {short_description}")
-        print("-" * 60)
+    # for row in rows:
+    #     title, url, published_at, category, short_description = row
+    #     print(f"📰 {title}")
+    #     print(f"🔗 {url}")
+    #     print(f"📅 {published_at}")
+    #     print(f"🏷️ Catégorie: {category}")
+    #     print(f"description: {short_description}")
+    #     print("-" * 60)
 
     conn.close()
 

@@ -1,18 +1,41 @@
-export async function fetchArticle(categorie = '', nbShown = 1000) {
+import { Article } from "@/types/article"
+import { ArticlePage } from "@/types/articlePage"
+
+// /lib/fnct.ts
+export async function fetchArticle(
+    category: string = '',
+    limit: number = 20,
+    page: number = 1
+): Promise<ArticlePage> {
     const params = new URLSearchParams()
-    if (categorie) params.append('categorie', categorie)
-    if (nbShown) params.append('nbShown', nbShown.toString())
+    if (category) params.set('categorie', category)
+    if (limit) params.set('limit', limit.toString())
+    if (page) params.set('page', page.toString())
 
-    const response = await fetch(`/api/articles?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
+    const res = await fetch(`/api/articles?${params.toString()}`)
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-    }
+    if (!res.ok) throw new Error('Erreur de chargement des articles')
+    return await res.json()
+}
 
-    return response.json()
+export async function fetchTendancesArticles(): Promise<Article[]> {
+    const res = await fetch('/api/articles/tendances');
+    if (!res.ok) throw new Error('Erreur de chargement des tendances');
+
+    const { tendances } = await res.json();
+    console.log('Tendances:', tendances);
+    return tendances || [];
+}
+
+export async function fetchStats(): Promise<{ countArticles: number; countCategories: number }> {
+    const res = await fetch('/api/articles/stats');
+    if (!res.ok) throw new Error('Erreur de chargement des statistiques');
+
+    return await res.json();
+}
+
+export async function fetchCategories(): Promise<string[]> {
+    const res = await fetch('/api/articles/categories');
+    if (!res.ok) throw new Error('Erreur lors du chargement des catégories');
+    return await res.json();
 }
