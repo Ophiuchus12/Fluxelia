@@ -1,7 +1,7 @@
 'use client'
 import { Search, Filter, Globe, Clock, ExternalLink, Menu, X, Grid, List, TrendingUp, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react'
-import { fetchArticle, fetchStats } from '@/lib/fnct'
+import { fetchArticle, fetchCategories, fetchStats } from '@/lib/fnct'
 import { ArticleCard } from './components/ArticleCard'
 import { Article } from '@/types/article'
 import { Header } from './components/Header';
@@ -29,9 +29,7 @@ export default function FluxeliaApp() {
 
       const res: ArticlePage = await fetchArticle('', limit, 1)
 
-      const uniqueCats: string[] = Array.from(
-        new Set(res.articles.map((a) => a.category))
-      ).sort()
+      const uniqueCats = await fetchCategories();
 
       setCategories(['Toutes', ...uniqueCats])
       setArticles(res.articles)
@@ -42,6 +40,8 @@ export default function FluxeliaApp() {
 
       const statsRes = await fetchStats()
       setStats({ countArticles: statsRes.countArticles, countCategories: statsRes.countCategories })
+
+      await loadArticlesByCategory(selectedCategory, 1);
 
     } catch (err) {
       setError('Erreur lors du chargement des catégories')

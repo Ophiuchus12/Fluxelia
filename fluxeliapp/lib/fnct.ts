@@ -23,6 +23,7 @@ export async function fetchTendancesArticles(): Promise<Article[]> {
     if (!res.ok) throw new Error('Erreur de chargement des tendances');
 
     const { tendances } = await res.json();
+    console.log('Tendances:', tendances);
     return tendances || [];
 }
 
@@ -30,5 +31,11 @@ export async function fetchStats(): Promise<{ countArticles: number; countCatego
     const res = await fetch('/api/articles/stats');
     if (!res.ok) throw new Error('Erreur de chargement des statistiques');
 
+    return await res.json();
+}
+
+export async function fetchCategories(): Promise<string[]> {
+    const res = await fetch('/api/articles/categories');
+    if (!res.ok) throw new Error('Erreur lors du chargement des catégories');
     return await res.json();
 }
