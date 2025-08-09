@@ -1,7 +1,7 @@
 'use client'
 import { Search, Filter, Globe, Clock, ExternalLink, Menu, X, Grid, List, TrendingUp, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react'
-import { fetchArticle } from '@/lib/fnct'
+import { fetchArticle, fetchStats } from '@/lib/fnct'
 import { ArticleCard } from './components/ArticleCard'
 import { Article } from '@/types/article'
 import { Header } from './components/Header';
@@ -15,6 +15,7 @@ export default function FluxeliaApp() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [stats, setStats] = useState<{ countArticles: number; countCategories: number } | null>(null)
 
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -26,19 +27,22 @@ export default function FluxeliaApp() {
       setLoading(true)
       setError(null)
 
-      // Appel API avec fetchArticle pour récupérer les articles paginés
       const res: ArticlePage = await fetchArticle('', limit, 1)
 
-      // Extraction des catégories uniques
       const uniqueCats: string[] = Array.from(
         new Set(res.articles.map((a) => a.category))
       ).sort()
 
-      // Mise à jour des catégories avec "Toutes" en premier
       setCategories(['Toutes', ...uniqueCats])
-
-      // Stockage des articles récupérés
       setArticles(res.articles)
+
+      // <-- Ajouté : initialiser la pagination à partir de la réponse
+      setPage(res.pagination?.page ?? 1)
+      setTotalPages(res.pagination?.totalPages ?? 1)
+
+      const statsRes = await fetchStats()
+      setStats({ countArticles: statsRes.countArticles, countCategories: statsRes.countCategories })
+
     } catch (err) {
       setError('Erreur lors du chargement des catégories')
       console.error('Erreur:', err)
@@ -46,6 +50,7 @@ export default function FluxeliaApp() {
       setLoading(false)
     }
   }
+
 
 
   // Fonction pour charger les articles d'une catégorie spécifique
@@ -114,8 +119,8 @@ export default function FluxeliaApp() {
           <div className="flex flex-wrap justify-center gap-8 mt-12">
             {[
               { label: "Sources Active", value: "2", icon: <Globe className="w-5 h-5" /> },
-              { label: "Thèmes", value: "2", icon: <Zap className="w-5 h-5" /> },
-              { label: "Tendances", value: "Live", icon: <TrendingUp className="w-5 h-5" /> }
+              { label: "Catégories", value: stats?.countCategories || 0, icon: <Zap className="w-5 h-5" /> },
+              { label: "Nombres d'articles", value: stats?.countArticles || 0, icon: <TrendingUp className="w-5 h-5" /> }
             ].map((stat, index) => (
               <div key={index} className="flex items-center space-x-3 px-4 py-2 bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50">
                 <div className="text-cyan-400">{stat.icon}</div>

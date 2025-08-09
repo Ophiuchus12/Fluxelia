@@ -23,7 +23,7 @@ export function SearchAndFilter({
     return (
         <div className="relative bg-gray-800/90 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-6 mb-8 shadow-2xl">
             {/* Barre de recherche futuriste */}
-            <div className={`relative mb-6 transition-all duration-300 ${isFocused ? 'scale-[1.02]' : ''}`}>
+            {/* <div className={`relative mb-6 transition-all duration-300 ${isFocused ? 'scale-[1.02]' : ''}`}>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur-sm opacity-0 transition-opacity duration-300"
                     style={{ opacity: isFocused ? 1 : 0 }}></div>
                 <div className="relative flex items-center">
@@ -44,7 +44,7 @@ export function SearchAndFilter({
                         </div>
                     )}
                 </div>
-            </div>
+            </div> */}
 
             {/* Filtres et options d'affichage */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

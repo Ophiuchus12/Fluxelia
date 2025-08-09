@@ -4,17 +4,17 @@ import { open } from 'sqlite'
 import path from 'path'
 
 async function openDb() {
-    const dbPath = path.resolve(process.cwd(), '../rss_feed.db')
-    return open({
-        filename: dbPath,
-        driver: sqlite3.Database,
-    })
+  const dbPath = path.resolve(process.cwd(), '../rss_feed.db')
+  return open({
+    filename: dbPath,
+    driver: sqlite3.Database,
+  })
 }
 
 export async function GET(req: Request) {
-    const db = await openDb()
+  const db = await openDb()
 
-    const tendances = await db.all(`
+  const tendances = await db.all(`
     SELECT *
     FROM (
       SELECT *,
@@ -24,5 +24,5 @@ export async function GET(req: Request) {
     WHERE row_num <= 5
   `)
 
-    return NextResponse.json(tendances)
+  return NextResponse.json({ tendances: tendances })
 }

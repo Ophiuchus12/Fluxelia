@@ -1,20 +1,38 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react';
-import { Globe, Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
+import { Globe, Menu, X } from 'lucide-react'
 
 export function Header() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+    const pathname = usePathname()
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 10)
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
+
+    const links = [
+        { href: '/', label: 'Articles' },
+        { href: '/tendances', label: 'Tendances' },
+        { href: '/about', label: 'À propos' },
+    ]
+
+    const isActive = (href: string) => pathname === href
 
     return (
-        <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-            ? 'bg-gray-900/95 backdrop-blur-xl border-b border-cyan-500/20 shadow-lg shadow-cyan-500/10'
-            : 'bg-gray-900/80 backdrop-blur-md'
-            }`}>
+        <header
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
+                ? 'bg-gray-900/95 backdrop-blur-xl border-b border-cyan-500/20 shadow-lg shadow-cyan-500/10'
+                : 'bg-gray-900/80 backdrop-blur-md'
+                }`}
+        >
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    {/* Logo avec effet néon */}
+                    {/* Logo */}
                     <div className="flex items-center space-x-3 group">
                         <div className="relative">
                             <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -32,43 +50,50 @@ export function Header() {
 
                     {/* Navigation desktop */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                            Articles
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                            Tendances
-                        </a>
-                        <a href="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                            À propos
-                        </a>
+                        {links.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`font-medium transition-colors ${isActive(link.href)
+                                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-bold border-b-2 border-cyan-400 pb-1'
+                                    : 'text-gray-400 hover:text-white'
+                                    }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
                     </div>
 
                     {/* Menu mobile */}
                     <button
-                        className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                        className="md:hidden p-2 rounded-lg hover:bg-gray-700"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
-                        {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                        {isMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
                     </button>
                 </div>
 
                 {/* Menu mobile dropdown */}
                 {isMenuOpen && (
-                    <div className="md:hidden border-t border-gray-200 py-4">
+                    <div className="md:hidden border-t border-gray-700 py-4">
                         <div className="flex flex-col space-y-3">
-                            <a href="/" className="text-gray-700 hover:text-blue-600 font-medium px-2 py-1">
-                                Articles
-                            </a>
-                            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium px-2 py-1">
-                                Tendances
-                            </a>
-                            <a href="/about" className="text-gray-700 hover:text-blue-600 font-medium px-2 py-1">
-                                À propos
-                            </a>
+                            {links.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`px-2 py-1 font-medium ${isActive(link.href)
+                                        ? 'text-cyan-400 font-bold'
+                                        : 'text-gray-400 hover:text-white'
+                                        }`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 )}
             </nav>
         </header>
-    );
+    )
 }

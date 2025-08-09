@@ -18,10 +18,17 @@ export async function fetchArticle(
     return await res.json()
 }
 
-export async function fetchTendances(): Promise<Article[]> {
-    const res = await fetch('/api/articles/tendances')
+export async function fetchTendancesArticles(): Promise<Article[]> {
+    const res = await fetch('/api/articles/tendances');
+    if (!res.ok) throw new Error('Erreur de chargement des tendances');
 
-    if (!res.ok) throw new Error('Erreur de chargement des tendances')
-    return await res.json()
+    const { tendances } = await res.json();
+    return tendances || [];
 }
 
+export async function fetchStats(): Promise<{ countArticles: number; countCategories: number }> {
+    const res = await fetch('/api/articles/stats');
+    if (!res.ok) throw new Error('Erreur de chargement des statistiques');
+
+    return await res.json();
+}
