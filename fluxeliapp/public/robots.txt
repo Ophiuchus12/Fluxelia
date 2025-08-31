@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://fluxelia.fr
+
+# Sitemaps
+Sitemap: https://fluxelia.fr/sitemap.xml
