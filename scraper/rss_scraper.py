@@ -42,7 +42,7 @@ def create_table():
    
 
 def rss_flux():
-    with open('flux.json', 'r') as file:
+    with open(os.path.join(BASE_DIR, 'flux.json'), 'r') as file:
         data = json.load(file)
 
     for item in data:
