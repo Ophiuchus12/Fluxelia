@@ -1,9 +1,34 @@
-# *
+# Fluxelia - Agrégateur d'actualités intelligent
+# https://fluxelia.fr
+
+# Autoriser tous les robots
 User-agent: *
 Allow: /
 
-# Host
+# Interdire les routes API et fichiers système
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Autoriser spécifiquement les pages importantes
+Allow: /
+Allow: /about
+Allow: /tendances
+Allow: /categorie/
+
+# Googlebot spécifique
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Host canonique
 Host: https://fluxelia.fr
 
 # Sitemaps
 Sitemap: https://fluxelia.fr/sitemap.xml
+Sitemap: https://fluxelia.fr/sitemap-0.xml

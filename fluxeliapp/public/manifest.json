@@ -1,0 +1,56 @@
+{
+    "name": "Fluxelia - Agrégateur d'actualités intelligent",
+    "short_name": "Fluxelia",
+    "description": "Centralisez votre veille : tech, économie, sport, santé, environnement. Actualités en temps réel de sources fiables.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#111827",
+    "theme_color": "#06b6d4",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "fr",
+    "categories": [
+        "news",
+        "entertainment"
+    ],
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Tendances",
+            "short_name": "Tendances",
+            "description": "Voir les actualités tendances",
+            "url": "/tendances",
+            "icons": [
+                {
+                    "src": "/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Technologie",
+            "short_name": "Tech",
+            "description": "Actualités technologie",
+            "url": "/categorie/technologie",
+            "icons": [
+                {
+                    "src": "/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}

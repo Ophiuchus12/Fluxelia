@@ -1,107 +1,134 @@
-'use client'
-import { fetchTendancesArticles } from "@/lib/fnct";
-import { Article } from "@/types/article";
-import { useEffect, useState } from "react";
-import { Header } from "../components/Header";
-import { ArticleCard } from "../components/ArticleCard";
+import { Metadata } from 'next'
+import { Suspense } from 'react'
+import { getTendances, getCategories } from '@/lib/db'
+import { SITE_CONFIG, PAGES_SEO } from '@/lib/seo-config'
+import { JsonLd, generateBreadcrumbJsonLd, generateTrendingPageJsonLd } from '../components/JsonLd'
+import { TendancesClient } from './TendancesClient'
 
+// ============================================
+// MÉTADONNÉES SEO
+// ============================================
+export const metadata: Metadata = {
+    title: PAGES_SEO.tendances.title,
+    description: PAGES_SEO.tendances.description,
 
-export default function Tendances() {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    keywords: [
+        'tendances actualités',
+        'news du jour',
+        'dernières actualités',
+        'articles populaires',
+        'actualités en temps réel',
+    ],
 
-    async function fetchTendances() {
-        try {
-            setLoading(true);
-            setError(null);
-            const res: Article[] = await fetchTendancesArticles();
-            if (!res) {
-                throw new Error('Aucun article trouvé');
-            }
-            setArticles(res);
+    alternates: {
+        canonical: `${SITE_CONFIG.url}/tendances`,
+    },
 
-        } catch (err) {
-            setError('Erreur de chargement des tendances');
-        } finally {
-            setLoading(false);
-        }
-    }
+    openGraph: {
+        title: PAGES_SEO.tendances.title,
+        description: PAGES_SEO.tendances.description,
+        url: `${SITE_CONFIG.url}/tendances`,
+        type: 'website',
+    },
 
-    useEffect(() => {
-        fetchTendances();
-    }, []);
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Tendances du jour | Fluxelia',
+        description: PAGES_SEO.tendances.description,
+    },
+}
 
+// ============================================
+// COMPOSANT DE CHARGEMENT
+// ============================================
+function TendancesSkeleton() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
-            {/* Effet de particules d'arrière-plan */}
-            <div className="fixed inset-0 opacity-20">
-                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            </div>
-            <Header />
-            <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-
-
-                {/* Gestion des erreurs */}
-                {error && (
-                    <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-                        <div className="flex items-center">
-                            <div className="text-red-600 mr-3">⚠️</div>
-                            <div>
-                                <p className="text-red-800 font-medium">Erreur de chargement</p>
-                                <p className="text-red-600 text-sm">{error}</p>
+        <div className="space-y-8">
+            {[...Array(3)].map((_, i) => (
+                <div key={i}>
+                    <div className="h-8 bg-gray-700 rounded w-48 mb-4"></div>
+                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        {[...Array(3)].map((_, j) => (
+                            <div key={j} className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6 animate-pulse">
+                                <div className="h-4 bg-gray-700 rounded w-20 mb-3"></div>
+                                <div className="h-6 bg-gray-700 rounded mb-2"></div>
+                                <div className="h-4 bg-gray-700 rounded w-3/4"></div>
                             </div>
-                            <button
-                                onClick={() => fetchTendances()}
-                                className="ml-auto px-3 py-1 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors"
-                            >
-                                Réessayer
-                            </button>
-                        </div>
+                        ))}
                     </div>
-                )}
-                {
-                    loading ? (
-                        <div className={`grid gap-6 ${viewMode === 'grid'
-                            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                            : 'grid-cols-1 max-w-4xl mx-auto'
-                            }`}>
-                            {/* Skeleton loaders */}
-                            {[...Array(6)].map((_, i) => (
-                                <div key={i} className="bg-white rounded-xl border border-gray-200 p-6">
-                                    <div className="animate-pulse">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="h-4 bg-gray-300 rounded w-20"></div>
-                                            <div className="h-4 bg-gray-300 rounded w-16"></div>
-                                        </div>
-                                        <div className="h-6 bg-gray-300 rounded mb-3"></div>
-                                        <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                                        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className={`grid gap-6 ${viewMode === 'grid'
-                            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                            : 'grid-cols-1 max-w-4xl mx-auto'
-                            }`}>
-                            {Array.isArray(articles) && articles.map((article, index) => (
-                                <ArticleCard
-                                    key={`${article.url}-${index}`}
-                                    article={article}
-                                    viewMode={viewMode}
-                                />
-                            ))}
-
-                        </div>
-                    )
-                }
-            </main >
+                </div>
+            ))}
         </div>
     )
-
 }
+
+// ============================================
+// PAGE TENDANCES (SERVER COMPONENT)
+// ============================================
+export default async function TendancesPage() {
+    const [articles, categories] = await Promise.all([
+        getTendances(),
+        getCategories(),
+    ])
+
+    // Grouper les articles par catégorie
+    const articlesByCategory = articles.reduce((acc, article) => {
+        if (!acc[article.category]) {
+            acc[article.category] = []
+        }
+        acc[article.category].push(article)
+        return acc
+    }, {} as Record<string, typeof articles>)
+
+    // Données structurées JSON-LD
+    const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+        { name: 'Accueil', url: SITE_CONFIG.url },
+        { name: 'Tendances', url: `${SITE_CONFIG.url}/tendances` },
+    ])
+
+    const trendingJsonLd = generateTrendingPageJsonLd(articles)
+
+    return (
+        <>
+            {/* JSON-LD */}
+            <JsonLd type="breadcrumb" data={breadcrumbJsonLd} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingJsonLd) }}
+            />
+
+            {/* Contenu SEO statique */}
+            <div className="sr-only">
+                <h1>Tendances - Les actualités du moment sur Fluxelia</h1>
+                <p>{PAGES_SEO.tendances.description}</p>
+                <p>{articles.length} articles tendances répartis dans {categories.length} catégories.</p>
+
+                {Object.entries(articlesByCategory).map(([category, catArticles]) => (
+                    <section key={category}>
+                        <h2>Tendances {category}</h2>
+                        <ul>
+                            {catArticles.map((article) => (
+                                <li key={article.id}>
+                                    <a href={article.url}>{article.title}</a>
+                                    <time dateTime={article.published_at}>
+                                        {new Date(article.published_at).toLocaleDateString('fr-FR')}
+                                    </time>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                ))}
+            </div>
+
+            {/* Composant client */}
+            <Suspense fallback={<TendancesSkeleton />}>
+                <TendancesClient
+                    initialArticles={articles}
+                    articlesByCategory={articlesByCategory}
+                />
+            </Suspense>
+        </>
+    )
+}
+
+export const revalidate = 300
