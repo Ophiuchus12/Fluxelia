@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Fluxelia - Votre veille d'actualités",
   description: "Agrégateur d'actualités intelligent",
+  icons: {
+    icon: "/favicon.ico", // chemin vers ton favicon dans /public
+  },
 };
 
 export default function RootLayout({

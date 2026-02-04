@@ -42,7 +42,7 @@ def create_table():
    
 
 def rss_flux():
-    with open('flux.json', 'r') as file:
+    with open(os.path.join(BASE_DIR, 'flux.json'), 'r') as file:
         data = json.load(file)
 
     for item in data:
@@ -55,7 +55,7 @@ def rss_flux():
 
 def json_to_sqlite(feed_data, category):
     for entry in feed_data.entries:
-        print(f"Processing entry: {entry.title}")
+        #(f"Processing entry: {entry.title}")
         title = entry.title
         url = entry.link
 
@@ -82,15 +82,15 @@ def read_articles_from_db(limit=10):
     cursor.execute("""
         SELECT title, url, published_at, category, short_description
         FROM articles
-        ORDER BY published_at DESC
+        ORDER BY published_at ASC
         LIMIT ?
     """, (limit,))
 
-    # rows = cursor.fetchall()
+    rows = cursor.fetchall()
 
-    # for row in rows:
-    #     title, url, published_at, category, short_description = row
-    #     print(f"📰 {title}")
+    for row in rows:
+        title, url, published_at, category, short_description = row
+        print(f"📰 {title}")
     #     print(f"🔗 {url}")
     #     print(f"📅 {published_at}")
     #     print(f"🏷️ Catégorie: {category}")
@@ -100,7 +100,21 @@ def read_articles_from_db(limit=10):
     conn.close()
 
 
+def delete_articles_from_db(older_than_days=30):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM articles
+        WHERE published_at < datetime('now', ? || ' days')
+    """, (-older_than_days,))
+
+    conn.commit()
+    conn.close()
+
 
 create_table()
 rss_flux()
-read_articles_from_db(20)
+#read_articles_from_db(20)
+delete_articles_from_db(30)
+
