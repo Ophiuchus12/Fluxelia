@@ -1,6 +1,10 @@
+'use client';
+
 import { Article } from "@/types/article";
-import { Clock, ExternalLink, Eye, Sparkles } from 'lucide-react';
-import { useState } from "react";
+import { ExternalLink, Eye, Sparkles } from 'lucide-react';
+import { useEffect, useState } from "react";
+
+
 
 interface ArticleCardProps {
     article: Article;
@@ -8,6 +12,14 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, viewMode }: ArticleCardProps) {
+
+
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString);
         const now = new Date();
@@ -18,6 +30,9 @@ export function ArticleCard({ article, viewMode }: ArticleCardProps) {
         if (diffHours < 24) return `Il y a ${diffHours}h`;
         return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
     };
+
+    const formattedDate = mounted ? formatDate(article.published_at) : '';
+
     const [isHovered, setIsHovered] = useState(false);
 
     const getCategoryColor = (category: string): string => {
@@ -51,7 +66,7 @@ export function ArticleCard({ article, viewMode }: ArticleCardProps) {
                                 </span>
                                 <div className="flex items-center text-sm text-gray-400">
                                     <div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 animate-pulse"></div>
-                                    {formatDate(article.published_at)}
+                                    {formattedDate}
                                 </div>
                             </div>
 
@@ -96,7 +111,7 @@ export function ArticleCard({ article, viewMode }: ArticleCardProps) {
                         </span>
                         <div className="flex items-center text-sm text-gray-400">
                             <div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 animate-pulse"></div>
-                            {formatDate(article.published_at)}
+                            {formattedDate}
                         </div>
                     </div>
 
