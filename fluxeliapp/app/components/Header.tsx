@@ -82,10 +82,11 @@ export function Header() {
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+                scrolled
                     ? 'bg-gray-900/95 backdrop-blur-xl shadow-lg shadow-cyan-500/10'
                     : 'bg-gray-900/90 backdrop-blur-md'
-                }`}
+            }`}
         >
             {/* ========== LIGNE 1 : Logo + Navigation + Recherche ========== */}
             <div className="border-b border-gray-800">
@@ -110,10 +111,11 @@ export function Header() {
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${isActive(link.href)
+                                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                                        isActive(link.href)
                                             ? 'text-cyan-400 bg-cyan-500/10'
                                             : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                                        }`}
+                                    }`}
                                 >
                                     {link.label}
                                 </Link>
@@ -199,10 +201,11 @@ export function Header() {
                             <Link
                                 key={cat.slug}
                                 href={cat.slug === '' ? '/' : `/categorie/${cat.slug}`}
-                                className={`flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${isCategoryActive(cat.slug)
+                                className={`flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                                    isCategoryActive(cat.slug)
                                         ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25'
                                         : 'text-gray-400 hover:text-white hover:bg-gray-800/70'
-                                    }`}
+                                }`}
                             >
                                 <span aria-hidden="true">{cat.emoji}</span>
                                 <span>{cat.name}</span>
@@ -250,10 +253,11 @@ export function Header() {
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`px-4 py-2.5 rounded-xl font-medium transition-all ${isActive(link.href)
+                                    className={`px-4 py-2.5 rounded-xl font-medium transition-all ${
+                                        isActive(link.href)
                                             ? 'text-cyan-400 bg-cyan-500/10'
                                             : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                                        }`}
+                                    }`}
                                 >
                                     {link.label}
                                 </Link>
@@ -270,10 +274,11 @@ export function Header() {
                                     <Link
                                         key={cat.slug}
                                         href={cat.slug === '' ? '/' : `/categorie/${cat.slug}`}
-                                        className={`flex items-center space-x-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isCategoryActive(cat.slug)
+                                        className={`flex items-center space-x-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                                            isCategoryActive(cat.slug)
                                                 ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 border border-cyan-500/30'
                                                 : 'text-gray-400 hover:text-white bg-gray-800/50 hover:bg-gray-800'
-                                            }`}
+                                        }`}
                                     >
                                         <span className="text-lg" aria-hidden="true">{cat.emoji}</span>
                                         <span>{cat.name}</span>
