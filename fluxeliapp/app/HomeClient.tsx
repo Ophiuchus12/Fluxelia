@@ -81,7 +81,7 @@ export function HomeClient({
 
             <Header />
 
-            <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+            <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
                 {/* Section hero futuriste */}
                 <header className="text-center mb-16 relative">
                     <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full border border-cyan-500/30 mb-6">
@@ -215,8 +215,8 @@ export function HomeClient({
                                     disabled={page === 1}
                                     aria-label="Page précédente"
                                     className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${page === 1
-                                            ? 'text-gray-600 cursor-not-allowed opacity-50'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                                        ? 'text-gray-600 cursor-not-allowed opacity-50'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                         }`}
                                 >
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -267,8 +267,8 @@ export function HomeClient({
                                                     aria-label={`Page ${p}`}
                                                     aria-current={p === page ? 'page' : undefined}
                                                     className={`w-10 h-10 rounded-xl font-bold text-sm transition-all duration-300 ${p === page
-                                                            ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 scale-110'
-                                                            : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 scale-110'
+                                                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                                                         }`}
                                                 >
                                                     {p}
@@ -283,8 +283,8 @@ export function HomeClient({
                                     disabled={page === totalPages}
                                     aria-label="Page suivante"
                                     className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${page === totalPages
-                                            ? 'text-gray-600 cursor-not-allowed opacity-50'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                                        ? 'text-gray-600 cursor-not-allowed opacity-50'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                         }`}
                                 >
                                     Suivant

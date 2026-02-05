@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/app/components/Header'
 import { ArticleCard } from '@/app/components/ArticleCard'
@@ -31,29 +30,11 @@ export function CategoryClient({
     initialArticles,
     initialPagination,
 }: CategoryClientProps) {
-    const router = useRouter()
-    const searchParams = useSearchParams()
-
-    const [articles, setArticles] = useState(initialArticles)
-    const [page, setPage] = useState(initialPagination.page)
-    const [totalPages, setTotalPages] = useState(initialPagination.totalPages)
-    const [total, setTotal] = useState(initialPagination.total)
+    const [articles] = useState<Article[]>(initialArticles)
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-    const [loading, setLoading] = useState(false)
-
-    // 🆕 Synchronise avec les props quand l'URL change
-    useEffect(() => {
-        setArticles(initialArticles)
-        setPage(initialPagination.page)
-        setTotalPages(initialPagination.totalPages)
-        setTotal(initialPagination.total)
-    }, [initialArticles, initialPagination])
-
-    // Navigation vers une autre page
-    const goToPage = (newPage: number) => {
-        setLoading(true)
-        router.push(`/categorie/${categorySlug}?page=${newPage}`)
-    }
+    const [page] = useState(initialPagination.page)
+    const [totalPages] = useState(initialPagination.totalPages)
+    const [total] = useState(initialPagination.total)
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
@@ -65,7 +46,7 @@ export function CategoryClient({
 
             <Header />
 
-            <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+            <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
                 {/* Fil d'Ariane */}
                 <Breadcrumbs
                     items={[
