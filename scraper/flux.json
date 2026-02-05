@@ -39,7 +39,9 @@
         "id": 6,
         "category": "Actualités",
         "feeds": [
-            "https://www.lefigaro.fr/rss/figaro_actualites.xml"
+            "https://www.francetvinfo.fr/titres.rss",
+            "https://www.lemonde.fr/rss/une.xml",
+            "https://www.20minutes.fr/feeds/rss-une.xml"
         ]
     }
 ]

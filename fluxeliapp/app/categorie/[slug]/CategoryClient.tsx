@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Header } from '@/app/components/Header'
 import { ArticleCard } from '@/app/components/ArticleCard'
@@ -30,11 +31,29 @@ export function CategoryClient({
     initialArticles,
     initialPagination,
 }: CategoryClientProps) {
-    const [articles] = useState<Article[]>(initialArticles)
+    const router = useRouter()
+    const searchParams = useSearchParams()
+
+    const [articles, setArticles] = useState(initialArticles)
+    const [page, setPage] = useState(initialPagination.page)
+    const [totalPages, setTotalPages] = useState(initialPagination.totalPages)
+    const [total, setTotal] = useState(initialPagination.total)
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-    const [page] = useState(initialPagination.page)
-    const [totalPages] = useState(initialPagination.totalPages)
-    const [total] = useState(initialPagination.total)
+    const [loading, setLoading] = useState(false)
+
+    // 🆕 Synchronise avec les props quand l'URL change
+    useEffect(() => {
+        setArticles(initialArticles)
+        setPage(initialPagination.page)
+        setTotalPages(initialPagination.totalPages)
+        setTotal(initialPagination.total)
+    }, [initialArticles, initialPagination])
+
+    // Navigation vers une autre page
+    const goToPage = (newPage: number) => {
+        setLoading(true)
+        router.push(`/categorie/${categorySlug}?page=${newPage}`)
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
@@ -90,8 +109,8 @@ export function CategoryClient({
                             <button
                                 onClick={() => setViewMode('grid')}
                                 className={`p-2 rounded-md transition-all ${viewMode === 'grid'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
-                                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                                     }`}
                                 title="Vue en grille"
                                 aria-pressed={viewMode === 'grid'}
@@ -101,8 +120,8 @@ export function CategoryClient({
                             <button
                                 onClick={() => setViewMode('list')}
                                 className={`p-2 rounded-md transition-all ${viewMode === 'list'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
-                                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                                     }`}
                                 title="Vue en liste"
                                 aria-pressed={viewMode === 'list'}
@@ -117,8 +136,8 @@ export function CategoryClient({
                 <section aria-label={`Articles ${categoryName}`}>
                     <div
                         className={`grid gap-6 ${viewMode === 'grid'
-                                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                                : 'grid-cols-1 max-w-4xl mx-auto'
+                            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+                            : 'grid-cols-1 max-w-4xl mx-auto'
                             }`}
                     >
                         {articles.map((article, index) => (
@@ -141,8 +160,8 @@ export function CategoryClient({
                                     href={page > 1 ? `/categorie/${categorySlug}?page=${page - 1}` : '#'}
                                     aria-label="Page précédente"
                                     className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all ${page === 1
-                                            ? 'text-gray-600 cursor-not-allowed opacity-50 pointer-events-none'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                                        ? 'text-gray-600 cursor-not-allowed opacity-50 pointer-events-none'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                         }`}
                                 >
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,8 +191,8 @@ export function CategoryClient({
                                                 aria-label={`Page ${pageNum}`}
                                                 aria-current={pageNum === page ? 'page' : undefined}
                                                 className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-sm transition-all ${pageNum === page
-                                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25'
-                                                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25'
+                                                    : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                                                     }`}
                                             >
                                                 {pageNum}
@@ -187,8 +206,8 @@ export function CategoryClient({
                                     href={page < totalPages ? `/categorie/${categorySlug}?page=${page + 1}` : '#'}
                                     aria-label="Page suivante"
                                     className={`flex items-center px-4 py-3 rounded-xl font-medium text-sm transition-all ${page === totalPages
-                                            ? 'text-gray-600 cursor-not-allowed opacity-50 pointer-events-none'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                                        ? 'text-gray-600 cursor-not-allowed opacity-50 pointer-events-none'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                         }`}
                                 >
                                     Suivant
