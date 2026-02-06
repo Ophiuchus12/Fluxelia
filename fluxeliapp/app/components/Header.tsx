@@ -89,41 +89,49 @@ export function Header() {
             }`}
         >
             {/* ========== LIGNE 1 : Logo + Navigation + Recherche ========== */}
-            <div className="border-b border-gray-800">
+            <div className="border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-sm">
                 <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navigation principale">
-                    <div className="flex justify-between items-center h-14">
+                    <div className="flex justify-between items-center h-16">
                         {/* Logo */}
                         <Link href="/" className="flex items-center space-x-3 group flex-shrink-0">
                             <div className="relative">
-                                <div className="w-9 h-9 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                                    <Globe className="w-5 h-5 text-white" aria-hidden="true" />
+                                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                                    <Globe className="w-6 h-6 text-white" aria-hidden="true" />
                                 </div>
-                                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-lg blur-md opacity-40 group-hover:opacity-60 transition-opacity" aria-hidden="true"></div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-xl blur-md opacity-50 group-hover:opacity-70 transition-opacity" aria-hidden="true"></div>
                             </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                                 Fluxelia
                             </span>
                         </Link>
 
                         {/* Navigation desktop */}
-                        <div className="hidden md:flex items-center space-x-1">
+                        <div className="hidden md:flex items-center space-x-2">
                             {links.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
-                                        isActive(link.href)
-                                            ? 'text-cyan-400 bg-cyan-500/10'
-                                            : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                                    }`}
+                                    className="relative px-4 py-2 group"
                                 >
-                                    {link.label}
+                                    <span className={`text-base font-semibold transition-colors ${
+                                        isActive(link.href)
+                                            ? 'text-white'
+                                            : 'text-gray-300 group-hover:text-white'
+                                    }`}>
+                                        {link.label}
+                                    </span>
+                                    {/* Soulignement gradient */}
+                                    <span className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all ${
+                                        isActive(link.href)
+                                            ? 'opacity-100'
+                                            : 'opacity-0 group-hover:opacity-50'
+                                    }`}></span>
                                 </Link>
                             ))}
                         </div>
 
                         {/* Actions droite */}
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-3">
                             {/* Bouton Recherche Desktop */}
                             <div className="hidden md:flex items-center">
                                 {isSearchOpen ? (
@@ -135,9 +143,9 @@ export function Header() {
                                                 value={searchQuery}
                                                 onChange={(e) => setSearchQuery(e.target.value)}
                                                 placeholder="Rechercher..."
-                                                className="w-64 pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none transition-all"
+                                                className="w-72 pl-10 pr-4 py-2.5 bg-gray-900/80 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all"
                                             />
-                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         </div>
                                         <button
                                             type="button"
@@ -148,18 +156,18 @@ export function Header() {
                                             className="ml-2 p-2 text-gray-400 hover:text-white transition-colors"
                                             aria-label="Fermer la recherche"
                                         >
-                                            <X className="w-4 h-4" />
+                                            <X className="w-5 h-5" />
                                         </button>
                                     </form>
                                 ) : (
                                     <button
                                         onClick={() => setIsSearchOpen(true)}
-                                        className="flex items-center space-x-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-all"
+                                        className="flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-white bg-gray-700/50 hover:bg-gray-700 border border-gray-600/50 rounded-xl transition-all"
                                         aria-label="Ouvrir la recherche"
                                     >
-                                        <Search className="w-4 h-4" />
-                                        <span className="text-sm hidden lg:inline">Rechercher</span>
-                                        <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-xs text-gray-500 bg-gray-800 border border-gray-700 rounded">
+                                        <Search className="w-5 h-5" />
+                                        <span className="text-sm font-medium hidden lg:inline">Rechercher</span>
+                                        <kbd className="hidden lg:inline-flex items-center px-2 py-0.5 text-xs text-gray-400 bg-gray-800 border border-gray-600 rounded-md ml-1">
                                             /
                                         </kbd>
                                     </button>
@@ -169,7 +177,7 @@ export function Header() {
                             {/* Bouton recherche mobile */}
                             <button
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                className="md:hidden p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                                className="md:hidden p-2.5 text-gray-300 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded-xl transition-colors"
                                 aria-label="Rechercher"
                             >
                                 <Search className="w-5 h-5" />
@@ -177,7 +185,7 @@ export function Header() {
 
                             {/* Menu mobile toggle */}
                             <button
-                                className="md:hidden p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                                className="md:hidden p-2.5 text-gray-300 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded-xl transition-colors"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 aria-expanded={isMenuOpen}
                                 aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -193,24 +201,30 @@ export function Header() {
                 </nav>
             </div>
 
-            {/* ========== LIGNE 2 : Catégories (Desktop) ========== */}
+            {/* ========== LIGNE 2 : Catégories (Desktop) - Style D centré ========== */}
             <div className="hidden md:block border-b border-gray-800/50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center space-x-1 py-2 overflow-x-auto scrollbar-hide">
-                        {CATEGORIES.map((cat) => (
-                            <Link
-                                key={cat.slug}
-                                href={cat.slug === '' ? '/' : `/categorie/${cat.slug}`}
-                                className={`flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                                    isCategoryActive(cat.slug)
-                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25'
-                                        : 'text-gray-400 hover:text-white hover:bg-gray-800/70'
-                                }`}
-                            >
-                                <span aria-hidden="true">{cat.emoji}</span>
-                                <span>{cat.name}</span>
-                            </Link>
-                        ))}
+                    <div className="flex items-center justify-center py-2.5">
+                        <div className="flex items-center flex-wrap justify-center gap-x-2 gap-y-1">
+                            {CATEGORIES.map((cat, index) => (
+                                <div key={cat.slug} className="flex items-center">
+                                    <Link
+                                        href={cat.slug === '' ? '/' : `/categorie/${cat.slug}`}
+                                        className={`flex items-center space-x-1.5 px-2 py-1 rounded-md text-sm font-medium whitespace-nowrap transition-all ${
+                                            isCategoryActive(cat.slug)
+                                                ? 'text-cyan-400 bg-cyan-500/10'
+                                                : 'text-gray-400 hover:text-white'
+                                        }`}
+                                    >
+                                        <span aria-hidden="true">{cat.emoji}</span>
+                                        <span>{cat.name}</span>
+                                    </Link>
+                                    {index < CATEGORIES.length - 1 && (
+                                        <span className="text-gray-600 mx-1">•</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
