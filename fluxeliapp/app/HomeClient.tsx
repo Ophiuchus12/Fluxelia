@@ -37,6 +37,23 @@ export function HomeClient({
     const [totalPages, setTotalPages] = useState(initialPagination.totalPages)
     const limit = 20
 
+    // En haut du composant, ajoute le state
+    const [sourcesCount, setSourcesCount] = useState(7) // Valeur par défaut
+
+    // Ajoute ce useEffect
+    useEffect(() => {
+        async function fetchSources() {
+            try {
+                const res = await fetch('/api/sources')
+                const data = await res.json()
+                setSourcesCount(data.sources)
+            } catch (error) {
+                console.error('Erreur:', error)
+            }
+        }
+        fetchSources()
+    }, [])
+
     // Fonction pour charger les articles d'une catégorie spécifique
     async function loadArticlesByCategory(category: string, pageToLoad: number = 1) {
         try {
@@ -103,7 +120,7 @@ export function HomeClient({
                     {/* Stats en temps réel */}
                     <div className="flex flex-wrap justify-center gap-8 mt-12" role="list" aria-label="Statistiques du site">
                         {[
-                            { label: "Sources actives", value: "7", icon: <Globe className="w-5 h-5" aria-hidden="true" /> },
+                            { label: "Sources actives", value: sourcesCount, icon: <Globe className="w-5 h-5" aria-hidden="true" /> },
                             { label: "Informations", value: "Live", icon: <Zap className="w-5 h-5" aria-hidden="true" /> },
                             { label: "Nombre d'articles", value: stats?.countArticles || 0, icon: <TrendingUp className="w-5 h-5" aria-hidden="true" /> }
                         ].map((stat, index) => (

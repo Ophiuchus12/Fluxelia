@@ -13,11 +13,11 @@ import Link from 'next/link'
 function SearchPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  
+
   const initialQuery = searchParams.get('q') || ''
   const initialCategory = searchParams.get('categorie') || 'Toutes'
   const initialPage = parseInt(searchParams.get('page') || '1', 10)
-  
+
   const [query, setQuery] = useState(initialQuery)
   const [articles, setArticles] = useState<Article[]>([])
   const [categories, setCategories] = useState<string[]>(['Toutes'])
@@ -29,7 +29,7 @@ function SearchPageContent() {
   const [totalResults, setTotalResults] = useState(0)
   const [searchTime, setSearchTime] = useState(0)
   const [hasSearched, setHasSearched] = useState(false)
-  
+
   const limit = 20
 
   // Charger les catégories
@@ -59,20 +59,20 @@ function SearchPageContent() {
 
     try {
       const result = await fetchSearch(searchQuery, category, limit, pageNum)
-      
+
       setArticles(result.articles)
       setTotalResults(result.pagination.total)
       setTotalPages(result.pagination.totalPages)
       setPage(pageNum)
       setSearchTime(Math.round(performance.now() - startTime))
       setHasSearched(true)
-      
+
       // Mettre à jour l'URL
       const params = new URLSearchParams()
       params.set('q', searchQuery)
       if (category && category !== 'Toutes') params.set('categorie', category)
       if (pageNum > 1) params.set('page', pageNum.toString())
-      
+
       router.replace(`/recherche?${params.toString()}`, { scroll: false })
     } catch (error) {
       console.error('Erreur recherche:', error)
@@ -121,7 +121,7 @@ function SearchPageContent() {
 
       <Header />
 
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
         {/* En-tête de recherche */}
         <header className="mb-8">
           <div className="flex items-center space-x-3 mb-6">
@@ -181,21 +181,19 @@ function SearchPageContent() {
               <div className="flex items-center space-x-2 bg-gray-900/50 rounded-lg p-1 border border-gray-700/50">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded transition-all ${
-                    viewMode === 'grid'
+                  className={`p-2 rounded transition-all ${viewMode === 'grid'
                       ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded transition-all ${
-                    viewMode === 'list'
+                  className={`p-2 rounded transition-all ${viewMode === 'list'
                       ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -214,7 +212,7 @@ function SearchPageContent() {
             <p className="text-gray-400 mb-8 max-w-md mx-auto">
               Tapez au moins 2 caractères pour rechercher dans le titre et la description des articles.
             </p>
-            
+
             {/* Suggestions de recherche */}
             <div className="flex flex-wrap justify-center gap-2">
               <span className="text-sm text-gray-500">Suggestions :</span>
@@ -251,11 +249,10 @@ function SearchPageContent() {
         {/* Résultats */}
         {!loading && hasSearched && articles.length > 0 && (
           <>
-            <div className={`grid gap-6 ${
-              viewMode === 'grid'
+            <div className={`grid gap-6 ${viewMode === 'grid'
                 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
                 : 'grid-cols-1 max-w-4xl mx-auto'
-            }`}>
+              }`}>
               {articles.map((article, index) => (
                 <ArticleCard
                   key={`${article.url}-${index}`}
@@ -273,11 +270,10 @@ function SearchPageContent() {
                     <button
                       onClick={() => handlePageChange(page - 1)}
                       disabled={page === 1}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        page === 1
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${page === 1
                           ? 'text-gray-600 cursor-not-allowed'
                           : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                      }`}
+                        }`}
                     >
                       Précédent
                     </button>
@@ -299,11 +295,10 @@ function SearchPageContent() {
                           <button
                             key={pageNum}
                             onClick={() => handlePageChange(pageNum)}
-                            className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${
-                              pageNum === page
+                            className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${pageNum === page
                                 ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
                                 : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                            }`}
+                              }`}
                           >
                             {pageNum}
                           </button>
@@ -314,11 +309,10 @@ function SearchPageContent() {
                     <button
                       onClick={() => handlePageChange(page + 1)}
                       disabled={page === totalPages}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        page === totalPages
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${page === totalPages
                           ? 'text-gray-600 cursor-not-allowed'
                           : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                      }`}
+                        }`}
                     >
                       Suivant
                     </button>
