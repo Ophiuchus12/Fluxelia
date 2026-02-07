@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
-import { getArticles } from '@/lib/db'
+import { searchArticles } from '@/lib/db'
 import { isValidLocale, i18nConfig, Locale } from '@/lib/i18n'
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
 
-    const category = searchParams.get('category') || undefined
+    const query = searchParams.get('q') || ''
+    const category = searchParams.get('category') || null
     const pageParam = searchParams.get('page')
     const limitParam = searchParams.get('limit')
     const langParam = searchParams.get('lang')
@@ -16,11 +17,18 @@ export async function GET(req: Request) {
         ? langParam 
         : i18nConfig.defaultLocale
 
+    if (!query || query.length < 2) {
+        return NextResponse.json({
+            articles: [],
+            pagination: { page: 1, limit, total: 0, totalPages: 0 }
+        })
+    }
+
     try {
-        const result = await getArticles(category, limit, page, lang)
+        const result = await searchArticles(query, category, limit, page, lang)
         return NextResponse.json(result)
     } catch (error) {
-        console.error('API articles error:', error)
+        console.error('API search error:', error)
         return NextResponse.json(
             { error: 'Internal server error' },
             { status: 500 }

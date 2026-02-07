@@ -1,7 +1,7 @@
 {
-    "name": "Fluxelia - Agrégateur d'actualités intelligent",
+    "name": "Fluxelia - Smart News Aggregator",
     "short_name": "Fluxelia",
-    "description": "Centralisez votre veille : tech, économie, sport, santé, environnement. Actualités en temps réel de sources fiables.",
+    "description": "Centralize your news: tech, economy, sports, health, environment. Real-time news from trusted sources worldwide.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#111827",
@@ -9,6 +9,7 @@
     "orientation": "portrait-primary",
     "scope": "/",
     "lang": "fr",
+    "dir": "ltr",
     "categories": [
         "news",
         "entertainment"
@@ -31,7 +32,7 @@
         {
             "name": "Tendances",
             "short_name": "Tendances",
-            "description": "Voir les actualités tendances",
+            "description": "Voir les actualités tendances (FR)",
             "url": "/tendances",
             "icons": [
                 {
@@ -41,9 +42,21 @@
             ]
         },
         {
+            "name": "Trending",
+            "short_name": "Trending",
+            "description": "View trending news (EN)",
+            "url": "/en/trending",
+            "icons": [
+                {
+                    "src": "/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
             "name": "Technologie",
-            "short_name": "Tech",
-            "description": "Actualités technologie",
+            "short_name": "Tech FR",
+            "description": "Actualités technologie (FR)",
             "url": "/categorie/technologie",
             "icons": [
                 {
@@ -51,6 +64,20 @@
                     "sizes": "192x192"
                 }
             ]
+        },
+        {
+            "name": "Technology",
+            "short_name": "Tech EN",
+            "description": "Technology news (EN)",
+            "url": "/en/category/technologie",
+            "icons": [
+                {
+                    "src": "/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
         }
-    ]
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
 }

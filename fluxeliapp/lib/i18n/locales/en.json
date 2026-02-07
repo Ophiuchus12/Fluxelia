@@ -1,0 +1,137 @@
+{
+    "meta": {
+        "title": "Fluxelia - Smart News Aggregator",
+        "description": "Centralize your news: tech, economy, sports, health, environment. Real-time news from trusted sources.",
+        "keywords": "news, aggregator, RSS feed, monitoring, information"
+    },
+    "header": {
+        "articles": "Articles",
+        "trends": "Trending",
+        "about": "About",
+        "categories": "Categories",
+        "search": "Search",
+        "searchPlaceholder": "Search articles...",
+        "language": "Language"
+    },
+    "home": {
+        "badge": "AUGMENTED INFORMATION",
+        "title": "Flux",
+        "titleHighlight": "elia",
+        "subtitle": "Transcend the news. Explore",
+        "subtitleBrand": "Fluxelia",
+        "subtitleEnd": "which revolutionizes the way you consume information.",
+        "stats": {
+            "sources": "Active sources",
+            "live": "Information",
+            "liveValue": "Live",
+            "articles": "Total articles"
+        },
+        "allCategories": "All",
+        "filteredBy": "Filtered by:",
+        "viewAll": "View all",
+        "categoriesAvailable": "categories available",
+        "noArticles": "No articles found",
+        "noArticlesCategory": "No articles available in category",
+        "noArticlesGeneral": "No articles available at the moment.",
+        "viewAllArticles": "View all articles",
+        "retry": "Retry",
+        "loadError": "Loading error"
+    },
+    "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page",
+        "of": "of"
+    },
+    "article": {
+        "analyze": "ANALYZE",
+        "readMore": "Read more",
+        "ago": "ago",
+        "lessThanHour": "Less than an hour ago",
+        "hours": "h"
+    },
+    "trends": {
+        "badge": "TRENDING NOW",
+        "title": "The",
+        "titleHighlight": "Trends",
+        "subtitle": "Discover the 5 most recent articles in each category. Stay ahead of the news with our daily selection.",
+        "trendingArticles": "trending articles",
+        "categories": "categories",
+        "viewAll": "View all →",
+        "noTrends": "No trends available",
+        "noTrendsDesc": "Trends will be available once articles are collected.",
+        "backHome": "Back to home"
+    },
+    "about": {
+        "badge": "ABOUT",
+        "title": "Discover",
+        "titleHighlight": "Fluxelia",
+        "intro": "Fluxelia is your intelligent information hub. We centralize RSS feeds from multiple sources, automatically classify them by themes, and continuously update them with our automated collection engine.",
+        "missionTitle": "Our Mission",
+        "missionP1": "Each article is stored in our database with its title, date, description and original link. You can browse by categories, filter your interests, and quickly access the",
+        "missionLink": "latest trends",
+        "missionP2": "The goal: to provide you with a",
+        "missionHighlight": "single dashboard",
+        "missionP3": "to stay informed without wasting time visiting dozens of sites. One click opens the full article on the original source.",
+        "featuresTitle": "Features",
+        "features": {
+            "rss": {
+                "title": "RSS Aggregation",
+                "desc": "Automatic collection of RSS feeds from reliable and recognized sources."
+            },
+            "realtime": {
+                "title": "Real-time",
+                "desc": "Continuous updates so you never miss any news."
+            },
+            "categorization": {
+                "title": "Categorization",
+                "desc": "Automatic classification by themes for intuitive navigation."
+            },
+            "reliable": {
+                "title": "Reliable Sources",
+                "desc": "Rigorous selection of recognized and verified media."
+            },
+            "history": {
+                "title": "History",
+                "desc": "Articles kept for 30 days so you don't miss anything."
+            },
+            "opensource": {
+                "title": "Open Source",
+                "desc": "Open and transparent source code, built with Next.js and Python."
+            }
+        },
+        "categoriesTitle": "Our Categories",
+        "techTitle": "Tech Stack",
+        "techDesc": "Open-source project built with modern and performant technologies.",
+        "ctaTitle": "Ready to explore the news?",
+        "ctaArticles": "View articles",
+        "ctaTrends": "Discover trends"
+    },
+    "search": {
+        "title": "Search",
+        "subtitle": "Find articles from all our sources",
+        "placeholder": "Search by keyword, topic, theme...",
+        "results": "result",
+        "resultsPlural": "results",
+        "startSearch": "Start your search",
+        "startSearchDesc": "Type at least 2 characters to search in article titles and descriptions.",
+        "suggestions": "Suggestions:",
+        "noResults": "No results",
+        "noResultsFor": "No articles found for",
+        "inCategory": "in category",
+        "searchAllCategories": "Search in all categories",
+        "backHome": "Back to home"
+    },
+    "footer": {
+        "tagline": "Your smart news aggregator. Stay informed, stay connected.",
+        "about": "About",
+        "trends": "Trending"
+    },
+    "breadcrumbs": {
+        "home": "Home",
+        "categories": "Categories",
+        "trends": "Trending",
+        "about": "About",
+        "search": "Search"
+    }
+}
