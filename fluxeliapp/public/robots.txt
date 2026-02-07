@@ -1,7 +1,10 @@
-# Fluxelia - Agrégateur d'actualités intelligent
+# Fluxelia - Smart News Aggregator / Agrégateur d'actualités intelligent
 # https://fluxelia.fr
 
-# Autoriser tous les robots
+# ===========================================
+# RÈGLES GÉNÉRALES
+# ===========================================
+
 User-agent: *
 Allow: /
 
@@ -10,25 +13,48 @@ Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
 
-# Autoriser spécifiquement les pages importantes
+# ===========================================
+# PAGES FRANÇAISES (défaut)
+# ===========================================
+
 Allow: /
 Allow: /about
 Allow: /tendances
+Allow: /recherche
 Allow: /categorie/
 
-# Googlebot spécifique
+# ===========================================
+# PAGES ANGLAISES
+# ===========================================
+
+Allow: /en
+Allow: /en/about
+Allow: /en/trending
+Allow: /en/search
+Allow: /en/category/
+
+# ===========================================
+# GOOGLEBOT
+# ===========================================
+
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
 
-# Bingbot
+# ===========================================
+# BINGBOT
+# ===========================================
+
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 2
 
-# Host canonique
+# ===========================================
+# HOST ET SITEMAPS
+# ===========================================
+
 Host: https://fluxelia.fr
 
-# Sitemaps
+# Sitemap principal avec index
 Sitemap: https://fluxelia.fr/sitemap.xml
 Sitemap: https://fluxelia.fr/sitemap-0.xml

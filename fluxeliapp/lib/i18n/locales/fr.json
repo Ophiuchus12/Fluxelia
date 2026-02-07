@@ -1,0 +1,137 @@
+{
+    "meta": {
+        "title": "Fluxelia - Agrégateur d'actualités intelligent",
+        "description": "Centralisez votre veille : tech, économie, sport, santé, environnement. Actualités en temps réel de sources fiables.",
+        "keywords": "actualités, news, agrégateur, flux RSS, veille, information"
+    },
+    "header": {
+        "articles": "Articles",
+        "trends": "Tendances",
+        "about": "À propos",
+        "categories": "Catégories",
+        "search": "Rechercher",
+        "searchPlaceholder": "Rechercher des articles...",
+        "language": "Langue"
+    },
+    "home": {
+        "badge": "L'INFORMATION AUGMENTÉE",
+        "title": "Flux",
+        "titleHighlight": "elia",
+        "subtitle": "Transcendez l'actualité. Explorez",
+        "subtitleBrand": "Fluxelia",
+        "subtitleEnd": "qui révolutionne votre façon de consommer l'information.",
+        "stats": {
+            "sources": "Sources actives",
+            "live": "Informations",
+            "liveValue": "Live",
+            "articles": "Nombre d'articles"
+        },
+        "allCategories": "Toutes",
+        "filteredBy": "Filtré par:",
+        "viewAll": "Voir tout",
+        "categoriesAvailable": "catégories disponibles",
+        "noArticles": "Aucun article trouvé",
+        "noArticlesCategory": "Aucun article disponible dans la catégorie",
+        "noArticlesGeneral": "Aucun article disponible pour le moment.",
+        "viewAllArticles": "Voir tous les articles",
+        "retry": "Réessayer",
+        "loadError": "Erreur de chargement"
+    },
+    "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "page": "Page",
+        "of": "sur"
+    },
+    "article": {
+        "analyze": "ANALYSER",
+        "readMore": "Lire la suite",
+        "ago": "Il y a",
+        "lessThanHour": "Il y a moins d'une heure",
+        "hours": "h"
+    },
+    "trends": {
+        "badge": "TENDANCES DU MOMENT",
+        "title": "Les",
+        "titleHighlight": "Tendances",
+        "subtitle": "Découvrez les 5 articles les plus récents dans chaque catégorie. Restez à la pointe de l'actualité avec notre sélection quotidienne.",
+        "trendingArticles": "articles tendances",
+        "categories": "catégories",
+        "viewAll": "Voir tout →",
+        "noTrends": "Aucune tendance disponible",
+        "noTrendsDesc": "Les tendances seront disponibles dès que des articles seront collectés.",
+        "backHome": "Retour à l'accueil"
+    },
+    "about": {
+        "badge": "À PROPOS",
+        "title": "Découvrez",
+        "titleHighlight": "Fluxelia",
+        "intro": "Fluxelia est votre hub d'information intelligent. Nous centralisons des flux RSS provenant de multiples sources, les classons automatiquement par thèmes, et les mettons à jour en continu grâce à un moteur de collecte automatisé.",
+        "missionTitle": "Notre Mission",
+        "missionP1": "Chaque article est enregistré dans notre base avec son titre, sa date, sa description et son lien d'origine. Vous pouvez naviguer par catégories, filtrer vos intérêts, et accéder rapidement aux",
+        "missionLink": "dernières tendances",
+        "missionP2": "L'objectif : vous offrir un",
+        "missionHighlight": "tableau de bord unique",
+        "missionP3": "pour rester informé, sans perdre de temps à visiter des dizaines de sites. En un clic, l'article complet s'ouvre sur la source originale.",
+        "featuresTitle": "Fonctionnalités",
+        "features": {
+            "rss": {
+                "title": "Agrégation RSS",
+                "desc": "Collecte automatique des flux RSS de sources fiables et reconnues."
+            },
+            "realtime": {
+                "title": "Temps réel",
+                "desc": "Mise à jour continue pour ne rien manquer de l'actualité."
+            },
+            "categorization": {
+                "title": "Catégorisation",
+                "desc": "Classification automatique par thèmes pour une navigation intuitive."
+            },
+            "reliable": {
+                "title": "Sources fiables",
+                "desc": "Sélection rigoureuse de médias reconnus et vérifiés."
+            },
+            "history": {
+                "title": "Historique",
+                "desc": "Conservation des articles sur 30 jours pour ne rien perdre."
+            },
+            "opensource": {
+                "title": "Open Source",
+                "desc": "Code source ouvert et transparent, construit avec Next.js et Python."
+            }
+        },
+        "categoriesTitle": "Nos Catégories",
+        "techTitle": "Stack Technique",
+        "techDesc": "Projet open-source construit avec des technologies modernes et performantes.",
+        "ctaTitle": "Prêt à explorer l'actualité ?",
+        "ctaArticles": "Voir les articles",
+        "ctaTrends": "Découvrir les tendances"
+    },
+    "search": {
+        "title": "Recherche",
+        "subtitle": "Trouvez des articles parmi toutes nos sources",
+        "placeholder": "Rechercher par mot-clé, sujet, thème...",
+        "results": "résultat",
+        "resultsPlural": "résultats",
+        "startSearch": "Commencez votre recherche",
+        "startSearchDesc": "Tapez au moins 2 caractères pour rechercher dans le titre et la description des articles.",
+        "suggestions": "Suggestions :",
+        "noResults": "Aucun résultat",
+        "noResultsFor": "Aucun article trouvé pour",
+        "inCategory": "dans la catégorie",
+        "searchAllCategories": "Chercher dans toutes les catégories",
+        "backHome": "Retour à l'accueil"
+    },
+    "footer": {
+        "tagline": "Votre agrégateur d'actualités intelligent. Restez informé, restez connecté.",
+        "about": "À propos",
+        "trends": "Tendances"
+    },
+    "breadcrumbs": {
+        "home": "Accueil",
+        "categories": "Catégories",
+        "trends": "Tendances",
+        "about": "À propos",
+        "search": "Recherche"
+    }
+}

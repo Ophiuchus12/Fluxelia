@@ -1,19 +1,29 @@
-
 import { NextResponse } from 'next/server'
-import sqlite3 from 'sqlite3'
-import { open } from 'sqlite'
-import path from 'path'
-
-async function openDb() {
-    const dbPath = path.resolve(process.cwd(), '../rss_feed.db') // adapté pour Next.js
-    return open({
-        filename: dbPath,
-        driver: sqlite3.Database,
-    })
-}
+import { getCategories, getCategoriesWithSlugs } from '@/lib/db'
+import { isValidLocale, i18nConfig, Locale } from '@/lib/i18n'
 
 export async function GET(req: Request) {
-    const db = await openDb();
-    const categories = await db.all(`SELECT DISTINCT category FROM articles ORDER BY category ASC`);
-    return NextResponse.json(categories.map(c => c.category));
+    const { searchParams } = new URL(req.url)
+    const langParam = searchParams.get('lang')
+    const withSlugs = searchParams.get('withSlugs') === 'true'
+
+    const lang: Locale = langParam && isValidLocale(langParam) 
+        ? langParam 
+        : i18nConfig.defaultLocale
+
+    try {
+        if (withSlugs) {
+            const categories = await getCategoriesWithSlugs(lang)
+            return NextResponse.json(categories)
+        } else {
+            const categories = await getCategories(lang)
+            return NextResponse.json(categories)
+        }
+    } catch (error) {
+        console.error('API categories error:', error)
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        )
+    }
 }

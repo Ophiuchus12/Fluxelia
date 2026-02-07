@@ -4,31 +4,29 @@ import { Suspense } from 'react'
 import { getArticlesBySlug, getCategoryFromSlug } from '@/lib/db'
 import { SITE_CONFIG, getCategorySeo } from '@/lib/seo-config'
 import { categoryNames } from '@/lib/i18n'
-import { CategoryClient } from './CategoryClient'
+import { CategoryClient } from '@/app/categorie/[slug]/CategoryClient'
 
-const locale = 'fr'
+const locale = 'en'
 
 interface CategoryPageProps {
     params: Promise<{ slug: string }>
     searchParams: Promise<{ page?: string }>
 }
 
-// Générer les pages statiques pour chaque catégorie
 export async function generateStaticParams() {
     return Object.keys(categoryNames).map((slug) => ({ slug }))
 }
 
-// Métadonnées dynamiques
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
     const { slug } = await params
     const seo = getCategorySeo(slug, locale)
     const categoryName = getCategoryFromSlug(slug, locale)
 
     if (!seo || !categoryName) {
-        return { title: 'Catégorie non trouvée' }
+        return { title: 'Category not found' }
     }
 
-    const url = `${SITE_CONFIG.url}/categorie/${slug}`
+    const url = `${SITE_CONFIG.url}/en/category/${slug}`
 
     return {
         title: seo.title,
@@ -37,8 +35,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         alternates: {
             canonical: url,
             languages: {
-                'fr': url,
-                'en': `${SITE_CONFIG.url}/en/category/${slug}`,
+                'fr': `${SITE_CONFIG.url}/categorie/${slug}`,
+                'en': url,
             },
         },
         openGraph: {
@@ -46,7 +44,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
             description: seo.description,
             url,
             type: 'website',
-            locale: 'fr_FR',
+            locale: 'en_US',
         },
     }
 }
@@ -65,7 +63,7 @@ function CategorySkeleton() {
     )
 }
 
-export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
+export default async function CategoryPageEN({ params, searchParams }: CategoryPageProps) {
     const { slug } = await params
     const { page: pageParam } = await searchParams
 

@@ -1,47 +1,106 @@
 [
     {
         "id": 1,
-        "category": "Technologie",
-        "feeds": [
-            "https://korben.info/feed",
-            "https://www.techniques-ingenieur.fr/actualite/thematique/informatique-et-numerique/feed/"
-        ]
+        "slug": "technologie",
+        "category": {
+            "fr": "Technologie",
+            "en": "Technology"
+        },
+        "feeds": {
+            "fr": [
+                "https://korben.info/feed",
+                "https://www.techniques-ingenieur.fr/actualite/thematique/informatique-et-numerique/feed/"
+            ],
+            "en": [
+                "https://techcrunch.com/feed/",
+                "https://www.theverge.com/rss/index.xml",
+                "https://feeds.arstechnica.com/arstechnica/technology-lab"
+            ]
+        }
     },
     {
         "id": 2,
-        "category": "Economie",
-        "feeds": [
-            "https://www.lemonde.fr/economie/rss_full.xml"
-        ]
+        "slug": "economie",
+        "category": {
+            "fr": "Économie",
+            "en": "Economy"
+        },
+        "feeds": {
+            "fr": [
+                "https://www.lemonde.fr/economie/rss_full.xml"
+            ],
+            "en": [
+                "https://feeds.bbci.co.uk/news/business/rss.xml",
+                "https://www.reutersagency.com/feed/?best-topics=business-finance"
+            ]
+        }
     },
     {
         "id": 3,
-        "category": "Environnement",
-        "feeds": [
-            "https://www.actu-environnement.com/flux/rss/environnement/"
-        ]
+        "slug": "environnement",
+        "category": {
+            "fr": "Environnement",
+            "en": "Environment"
+        },
+        "feeds": {
+            "fr": [
+                "https://www.actu-environnement.com/flux/rss/environnement/"
+            ],
+            "en": [
+                "https://www.theguardian.com/environment/rss",
+                "https://www.carbonbrief.org/feed/"
+            ]
+        }
     },
     {
         "id": 4,
-        "category": "Sport",
-        "feeds": [
-            "https://partner-feeds.20min.ch/rss/20minutes/sports/"
-        ]
+        "slug": "sport",
+        "category": {
+            "fr": "Sport",
+            "en": "Sports"
+        },
+        "feeds": {
+            "fr": [
+                "https://partner-feeds.20min.ch/rss/20minutes/sports/"
+            ],
+            "en": [
+                "https://feeds.bbci.co.uk/sport/rss.xml",
+                "https://www.espn.com/espn/rss/news"
+            ]
+        }
     },
     {
         "id": 5,
-        "category": "Santé",
-        "feeds": [
-            "https://www.santemagazine.fr/feeds/rss/actualites"
-        ]
+        "slug": "sante",
+        "category": {
+            "fr": "Santé",
+            "en": "Health"
+        },
+        "feeds": {
+            "fr": [
+                "https://www.santemagazine.fr/feeds/rss/actualites"
+            ],
+            "en": [
+                "https://www.medicalnewstoday.com/rss",
+                "https://www.health.harvard.edu/blog/feed"
+            ]
+        }
     },
     {
         "id": 6,
-        "category": "Actualités",
-        "feeds": [
-            "https://www.francetvinfo.fr/titres.rss",
-            "https://www.lemonde.fr/rss/une.xml",
-            "https://www.20minutes.fr/feeds/rss-une.xml"
-        ]
+        "slug": "actualites",
+        "category": {
+            "fr": "Actualités",
+            "en": "News"
+        },
+        "feeds": {
+            "fr": [
+                "https://www.lefigaro.fr/rss/figaro_actualites.xml"
+            ],
+            "en": [
+                "https://feeds.bbci.co.uk/news/world/rss.xml",
+                "https://www.theguardian.com/world/rss"
+            ]
+        }
     }
 ]

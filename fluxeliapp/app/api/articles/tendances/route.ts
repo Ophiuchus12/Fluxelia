@@ -1,28 +1,23 @@
 import { NextResponse } from 'next/server'
-import sqlite3 from 'sqlite3'
-import { open } from 'sqlite'
-import path from 'path'
-
-async function openDb() {
-  const dbPath = path.resolve(process.cwd(), '../rss_feed.db')
-  return open({
-    filename: dbPath,
-    driver: sqlite3.Database,
-  })
-}
+import { getTendances } from '@/lib/db'
+import { isValidLocale, i18nConfig, Locale } from '@/lib/i18n'
 
 export async function GET(req: Request) {
-  const db = await openDb()
+    const { searchParams } = new URL(req.url)
+    const langParam = searchParams.get('lang')
 
-  const tendances = await db.all(`
-    SELECT *
-    FROM (
-      SELECT *,
-             ROW_NUMBER() OVER (PARTITION BY category ORDER BY published_at DESC) as row_num
-      FROM articles
-    )
-    WHERE row_num <= 5
-  `)
+    const lang: Locale = langParam && isValidLocale(langParam) 
+        ? langParam 
+        : i18nConfig.defaultLocale
 
-  return NextResponse.json({ tendances: tendances })
+    try {
+        const tendances = await getTendances(lang)
+        return NextResponse.json({ tendances })
+    } catch (error) {
+        console.error('API tendances error:', error)
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        )
+    }
 }

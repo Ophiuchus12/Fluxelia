@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
 import { SITE_CONFIG, PAGES_SEO } from '@/lib/seo-config'
-import { SearchPageFR } from '@/app/components/SearchPage'
+import { SearchPageEN } from '@/app/components/SearchPage'
 
 export const metadata: Metadata = {
-    title: PAGES_SEO.search.fr.title,
-    description: PAGES_SEO.search.fr.description,
+    title: PAGES_SEO.search.en.title,
+    description: PAGES_SEO.search.en.description,
     alternates: {
-        canonical: `${SITE_CONFIG.url}/recherche`,
+        canonical: `${SITE_CONFIG.url}/en/search`,
         languages: {
             'fr': `${SITE_CONFIG.url}/recherche`,
             'en': `${SITE_CONFIG.url}/en/search`,
@@ -14,6 +14,6 @@ export const metadata: Metadata = {
     },
 }
 
-export default function RecherchePage() {
-    return <SearchPageFR />
+export default function SearchPage() {
+    return <SearchPageEN />
 }
