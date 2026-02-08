@@ -28,14 +28,11 @@ const CATEGORY_COLORS: Record<string, string> = {
 export function TendancesClient({ locale: localeProp, initialArticles, articlesByCategory }: TendancesClientProps) {
     // S'assurer que locale a une valeur valide
     const locale = localeProp || 'fr'
-    
+
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
     const t = getTranslations(locale)
     const categories = getAllCategories(locale)
     const currentPath = getLocalizedPath('/tendances', locale)
-    
-    // Debug: afficher la locale dans la console
-    console.log('[TendancesClient] locale:', locale, 'localeProp:', localeProp)
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
@@ -98,7 +95,7 @@ export function TendancesClient({ locale: localeProp, initialArticles, articlesB
                                 className={`p-2 rounded-md transition-all ${viewMode === 'grid'
                                     ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                                }`}
+                                    }`}
                             >
                                 <Grid className="w-4 h-4" />
                             </button>
@@ -107,7 +104,7 @@ export function TendancesClient({ locale: localeProp, initialArticles, articlesB
                                 className={`p-2 rounded-md transition-all ${viewMode === 'list'
                                     ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                                }`}
+                                    }`}
                             >
                                 <List className="w-4 h-4" />
                             </button>
@@ -143,7 +140,7 @@ export function TendancesClient({ locale: localeProp, initialArticles, articlesB
                             <div className={`grid gap-6 ${viewMode === 'grid'
                                 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
                                 : 'grid-cols-1 max-w-4xl'
-                            }`}>
+                                }`}>
                                 {articles.map((article, index) => (
                                     <ArticleCard
                                         key={`${article.url}-${index}`}
