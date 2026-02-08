@@ -34,11 +34,13 @@ export function CategoryClient({
     initialArticles,
     initialPagination,
 }: CategoryClientProps) {
-    const [articles] = useState<Article[]>(initialArticles)
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-    const [page] = useState(initialPagination.page)
-    const [totalPages] = useState(initialPagination.totalPages)
-    const [total] = useState(initialPagination.total)
+
+    // Utiliser directement les props serveur (pas de useState pour éviter le stale state)
+    const articles = initialArticles
+    const page = initialPagination.page
+    const totalPages = initialPagination.totalPages
+    const total = initialPagination.total
 
     const t = getTranslations(locale)
     const categories = getAllCategories(locale)
@@ -96,7 +98,7 @@ export function CategoryClient({
                                 className={`p-2 rounded-md transition-all ${viewMode === 'grid'
                                     ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                                }`}
+                                    }`}
                             >
                                 <Grid className="w-4 h-4" />
                             </button>
@@ -105,7 +107,7 @@ export function CategoryClient({
                                 className={`p-2 rounded-md transition-all ${viewMode === 'list'
                                     ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                                }`}
+                                    }`}
                             >
                                 <List className="w-4 h-4" />
                             </button>
@@ -154,7 +156,7 @@ export function CategoryClient({
                                                 className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-sm ${pageNum === page
                                                     ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg'
                                                     : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                                                }`}
+                                                    }`}
                                             >
                                                 {pageNum}
                                             </Link>

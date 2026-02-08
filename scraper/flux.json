@@ -1,6 +1,5 @@
 [
     {
-        "id": 1,
         "slug": "technologie",
         "category": {
             "fr": "Technologie",
@@ -8,18 +7,16 @@
         },
         "feeds": {
             "fr": [
-                "https://korben.info/feed",
-                "https://www.techniques-ingenieur.fr/actualite/thematique/informatique-et-numerique/feed/"
+                "https://www.lemondeinformatique.fr/flux-rss/thematique/toutes-les-actualites/rss.xml",
+                "https://siecledigital.fr/feed/"
             ],
             "en": [
-                "https://techcrunch.com/feed/",
-                "https://www.theverge.com/rss/index.xml",
-                "https://feeds.arstechnica.com/arstechnica/technology-lab"
+                "https://www.wired.com/feed/rss",
+                "https://www.engadget.com/rss.xml"
             ]
         }
     },
     {
-        "id": 2,
         "slug": "economie",
         "category": {
             "fr": "Économie",
@@ -27,16 +24,16 @@
         },
         "feeds": {
             "fr": [
-                "https://www.lemonde.fr/economie/rss_full.xml"
+                "https://www.lemonde.fr/economie/rss_full.xml",
+                "https://bfmbusiness.bfmtv.com/rss/info/flux-rss/flux-toutes-les-actualites/"
             ],
             "en": [
                 "https://feeds.bbci.co.uk/news/business/rss.xml",
-                "https://www.reutersagency.com/feed/?best-topics=business-finance"
+                "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"
             ]
         }
     },
     {
-        "id": 3,
         "slug": "environnement",
         "category": {
             "fr": "Environnement",
@@ -44,16 +41,17 @@
         },
         "feeds": {
             "fr": [
-                "https://www.actu-environnement.com/flux/rss/environnement/"
+                "https://www.actu-environnement.com/flux/rss/environnement/",
+                "https://www.lemonde.fr/planete/rss_full.xml"
             ],
             "en": [
                 "https://www.theguardian.com/environment/rss",
-                "https://www.carbonbrief.org/feed/"
+                "https://www.carbonbrief.org/feed/",
+                "https://insideclimatenews.org/feed/"
             ]
         }
     },
     {
-        "id": 4,
         "slug": "sport",
         "category": {
             "fr": "Sport",
@@ -61,16 +59,17 @@
         },
         "feeds": {
             "fr": [
-                "https://partner-feeds.20min.ch/rss/20minutes/sports/"
+                "https://www.20minutes.fr/feeds/rss-sport.xml",
+                "https://news.google.com/rss/search?q=sport&hl=fr&gl=FR&ceid=FR:fr"
             ],
             "en": [
                 "https://feeds.bbci.co.uk/sport/rss.xml",
-                "https://www.espn.com/espn/rss/news"
+                "https://www.espn.com/espn/rss/news",
+                "https://www.skysports.com/rss/12040"
             ]
         }
     },
     {
-        "id": 5,
         "slug": "sante",
         "category": {
             "fr": "Santé",
@@ -78,16 +77,18 @@
         },
         "feeds": {
             "fr": [
-                "https://www.santemagazine.fr/feeds/rss/actualites"
+                "https://www.santemagazine.fr/feeds/rss/actualites",
+                "https://www.lemonde.fr/sante/rss_full.xml",
+                "https://www.topsante.com/feed/"
             ],
             "en": [
-                "https://www.medicalnewstoday.com/rss",
-                "https://www.health.harvard.edu/blog/feed"
+                "https://feeds.bbci.co.uk/news/health/rss.xml",
+                "https://rss.nytimes.com/services/xml/rss/nyt/Health.xml",
+                "https://www.statnews.com/feed/"
             ]
         }
     },
     {
-        "id": 6,
         "slug": "actualites",
         "category": {
             "fr": "Actualités",
@@ -95,11 +96,14 @@
         },
         "feeds": {
             "fr": [
-                "https://www.lefigaro.fr/rss/figaro_actualites.xml"
+                "https://www.lefigaro.fr/rss/figaro_actualites.xml",
+                "https://www.francetvinfo.fr/titres.rss",
+                "https://www.lemonde.fr/rss/une.xml"
             ],
             "en": [
                 "https://feeds.bbci.co.uk/news/world/rss.xml",
-                "https://www.theguardian.com/world/rss"
+                "https://www.theguardian.com/world/rss",
+                "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
             ]
         }
     }

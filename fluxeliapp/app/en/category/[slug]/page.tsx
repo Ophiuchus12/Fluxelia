@@ -3,18 +3,16 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { getArticlesBySlug, getCategoryFromSlug } from '@/lib/db'
 import { SITE_CONFIG, getCategorySeo } from '@/lib/seo-config'
-import { categoryNames } from '@/lib/i18n'
 import { CategoryClient } from '@/app/categorie/[slug]/CategoryClient'
 
 const locale = 'en'
 
+// Force dynamic pour que searchParams fonctionne
+export const dynamic = 'force-dynamic'
+
 interface CategoryPageProps {
     params: Promise<{ slug: string }>
     searchParams: Promise<{ page?: string }>
-}
-
-export async function generateStaticParams() {
-    return Object.keys(categoryNames).map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {

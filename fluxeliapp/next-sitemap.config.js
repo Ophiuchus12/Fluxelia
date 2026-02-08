@@ -31,11 +31,7 @@ const config = {
                 userAgent: 'Bingbot',
                 allow: '/',
             },
-        ],
-        additionalSitemaps: [
-            'https://fluxelia.fr/sitemap.xml',
-            'https://fluxelia.fr/sitemap-categories.xml',
-        ],
+        ]
     },
 
     // Génération dynamique des URLs additionnelles (FR + EN)

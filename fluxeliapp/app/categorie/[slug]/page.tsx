@@ -3,19 +3,16 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { getArticlesBySlug, getCategoryFromSlug } from '@/lib/db'
 import { SITE_CONFIG, getCategorySeo } from '@/lib/seo-config'
-import { categoryNames } from '@/lib/i18n'
 import { CategoryClient } from './CategoryClient'
 
 const locale = 'fr'
 
+// Force dynamic pour que searchParams fonctionne
+export const dynamic = 'force-dynamic'
+
 interface CategoryPageProps {
     params: Promise<{ slug: string }>
     searchParams: Promise<{ page?: string }>
-}
-
-// Générer les pages statiques pour chaque catégorie
-export async function generateStaticParams() {
-    return Object.keys(categoryNames).map((slug) => ({ slug }))
 }
 
 // Métadonnées dynamiques
